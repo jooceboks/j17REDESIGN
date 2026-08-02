@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { BookingCTA, WaitlistCTA } from "@/components/CTA";
+import { ReportFigure } from "@/components/ReportFigure";
 import { Reveal } from "@/components/Reveal";
 import {
   CheckList,
@@ -31,7 +32,10 @@ export const metadata: Metadata = {
       "Benchmark, retest, and see the difference. The proprietary assessment system at the center of everything J17 does.",
     url: `${siteConfig.url}/performance-index`,
     images: [
-      { url: asset("img/measure-large.jpg"), alt: "Performance Index™ assessment" },
+      {
+        url: "/img/index/competency-radar.png",
+        alt: "A J17 Performance Index™ competency radar comparing an individual against their peer group",
+      },
     ],
   },
 };
@@ -72,8 +76,11 @@ export default function PerformanceIndexPage() {
     <>
       {/* ---------------- Hero ---------------- */}
       <section className="relative flex min-h-[70vh] items-end overflow-hidden pt-20 sm:min-h-[80vh]">
+        {/* The old S3 hero was the same report on a white background with pink
+            accents. Using a coaching photo here instead, and letting the
+            report panels themselves carry the data further down the page. */}
         <Image
-          src={asset("img/measure-large.jpg")}
+          src={asset("img/personal-training-hero.jpg")}
           alt="A coach running a Performance Index™ assessment"
           fill
           priority
@@ -119,19 +126,8 @@ export default function PerformanceIndexPage() {
       {/* ---------------- Why measurement matters ---------------- */}
       <Section surface>
         <Container>
-          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <div className="mx-auto max-w-3xl">
             <Reveal>
-              <div className="relative aspect-[4/3] overflow-hidden">
-                <Image
-                  src={asset("img/structured-assessment.jpg")}
-                  alt="A structured assessment in progress at J17 Fitness"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover"
-                />
-              </div>
-            </Reveal>
-            <Reveal delay={100}>
               <p className="type-eyebrow mb-5">Why measurement matters</p>
               <h2 className="type-h2">Effort isn&apos;t a plan.</h2>
               <p className="type-body mt-8 text-lg">
@@ -141,6 +137,16 @@ export default function PerformanceIndexPage() {
                 guided.
               </p>
             </Reveal>
+          </div>
+
+          <div className="mt-16">
+            <ReportFigure
+              src="/img/index/physique-overview.png"
+              width={1600}
+              height={998}
+              alt="A Performance Index report panel titled General Situation of Physique. Two donut charts compare test-category proportions between a September 2025 assessment and a January 2026 reassessment. Excellent rises from 28.57 percent to 57.14 percent. Below, a table lists height, weight, BMI, sit and reach, single leg balance, broad jump, 30 second hurdle, 4 by 10 metre shuttle, push-ups and sit-ups for both dates, with the gain on each."
+              caption="Sample report: how the category mix shifts between a benchmark and a retest"
+            />
           </div>
         </Container>
       </Section>
@@ -176,6 +182,17 @@ export default function PerformanceIndexPage() {
               </div>
             </div>
           </div>
+
+          <div className="mt-16 flex justify-center">
+            <ReportFigure
+              src="/img/index/competency-radar.png"
+              width={1470}
+              height={1600}
+              maxWidth={760}
+              alt="A Performance Index competency radar chart plotting eight axes: BMI, flexibility, lower strength, balance, core strength, upper strength, agility and coordination. A lime outline shows the individual's competency distribution and a cyan outline shows the peer average, so strengths and gaps against peers are visible at a glance."
+              caption="Sample report: your competency profile plotted against your peer group"
+            />
+          </div>
         </Container>
       </Section>
 
@@ -183,17 +200,13 @@ export default function PerformanceIndexPage() {
       <Section surface>
         <Container>
           <div className="grid items-start gap-12 lg:grid-cols-2 lg:gap-16">
-            <Reveal>
-              <div className="relative aspect-[4/3] overflow-hidden">
-                <Image
-                  src={asset("img/progress.jpg")}
-                  alt="Reviewing retest results with a coach"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover"
-                />
-              </div>
-            </Reveal>
+            <ReportFigure
+              src="/img/index/growth-metrics.png"
+              width={1600}
+              height={1269}
+              alt="A Performance Index growth-metrics panel. A results table lists every measure across two assessment dates with the change on each. Below it, paired bar charts track height, weight, BMI and sit and reach across both dates, each overlaid with a cyan line showing the peer average for that age."
+              caption="Sample report: every measure tracked across assessments against the peer average"
+            />
             <div>
               <SectionHeading
                 eyebrow="Structured reassessment"
@@ -212,8 +225,28 @@ export default function PerformanceIndexPage() {
         </Container>
       </Section>
 
-      {/* ---------------- Programming + long term ---------------- */}
+      {/* ---------------- The scorecard ---------------- */}
       <Section>
+        <Container>
+          <SectionHeading
+            eyebrow="What you actually receive"
+            title="A score per test, against the standard"
+            lead="Every test is scored, banded from Needs Effort to Excellent, and placed against the published standard for your age and the average for your peer group."
+          />
+          <div className="mt-14">
+            <ReportFigure
+              src="/img/index/scorecard.png"
+              width={2296}
+              height={1824}
+              alt="A Performance Index scorecard. A legend defines four bands: Needs Effort, Fair, Good and Excellent. Below it, one row per test shows the trainee's score bar, the average score bar, and the standard breakpoints between bands. Rows shown are sit and reach for flexibility, single leg balance, broad jump for lower strength, and the step test for coordination."
+              caption="Sample report: each test banded against the published standard for your age"
+            />
+          </div>
+        </Container>
+      </Section>
+
+      {/* ---------------- Programming + long term ---------------- */}
+      <Section surface>
         <Container>
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
             <div>
@@ -237,7 +270,7 @@ export default function PerformanceIndexPage() {
       </Section>
 
       {/* ---------------- Locations ---------------- */}
-      <Section surface>
+      <Section>
         <Container>
           <SectionHeading
             eyebrow="Available at"
