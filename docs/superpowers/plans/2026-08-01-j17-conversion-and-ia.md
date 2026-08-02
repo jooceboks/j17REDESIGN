@@ -187,7 +187,7 @@ Class pages sell a club that has not opened, so the only honest conversion is th
 
 **Interfaces:**
 - Consumes: `Service` type from Task 1's tested module
-- Produces: `Service.primaryAction: "waitlist" | "enquiry"` — read by Task 7's hub page
+- Produces: `Service.primaryAction: "waitlist" | "enquiry"`, consumed only by `<ServicePage>`; and `variant="quiet"` on `<BookingCTA>`/`<WaitlistCTA>`, backed by the `.btn-quiet` class
 
 - [ ] **Step 1: Write the failing test**
 
@@ -861,7 +861,21 @@ function Hexagon() {
 }
 ```
 
-- [ ] **Step 7: Render it in the template**
+- [ ] **Step 7: Replace the hand-computed band colours with a counter**
+
+Sections alternate between the base canvas and the raised `surface` so that no
+two adjacent bands share a background. Today each one is computed by hand
+(`si % 2 === 0`, `service.sections.length % 2 === 0`). That arithmetic breaks
+the moment a section is inserted into the middle of the page, which is exactly
+what this task does. Two collisions it would cause if left alone:
+
+- **HIIT** has 1 content section, ending on `surface`. A `surface` `<IndexProof>`
+  directly after it produces two identical adjacent bands.
+- **Ride** has 0 content sections, so its checklist lands on `surface`, and the
+  `<MoreServices>` strip added in Task 10 collides with it the same way.
+
+Replace the arithmetic with a counter that yields the next colour in render
+order, so inserting or removing any section stays correct automatically.
 
 In `src/components/ServicePage.tsx`, add the import:
 
@@ -869,40 +883,118 @@ In `src/components/ServicePage.tsx`, add the import:
 import { IndexProof } from "./IndexProof";
 ```
 
-Insert immediately **after** the content-sections `.map()` block and **before** the founding-checklist `<Section>`:
+Immediately inside the `ServicePage` function, before the `return`, add:
 
 ```tsx
-      {service.indexMetric && <IndexProof metric={service.indexMetric} />}
+  /**
+   * Section backgrounds alternate so no two adjacent bands match.
+   *
+   * Call this once per <Section> in render order instead of hand-computing
+   * indices — that arithmetic silently breaks whenever a section is inserted
+   * mid-page. The intro section below is the base canvas, so the first call
+   * (the first content section) returns surface.
+   */
+  let bandIndex = 0;
+  const nextBand = () => bandIndex++ % 2 === 0;
 ```
 
-- [ ] **Step 8: Fix the alternating band after the insertion**
+- [ ] **Step 8: Route every band through the counter**
 
-`<IndexProof>` renders on `surface`. The founding-checklist `<Section>` immediately after it currently computes `surface={service.sections.length % 2 === 0}`. With the band inserted, the checklist must always be on the base canvas so it does not collide with the band above it. Change that line to:
+Still in `src/components/ServicePage.tsx`, make these four changes in order.
+
+The content-sections map — change:
 
 ```tsx
-      {/* IndexProof renders on surface (when present), so the checklist sits
-          on the base canvas. Ride has no IndexProof, and its zero content
-          sections mean the preceding intro section is also base — so it alone
-          keeps the alternating calculation. */}
-      <Section surface={!service.indexMetric && service.sections.length % 2 === 0}>
+        <Section key={section.heading} surface={si % 2 === 0}>
 ```
 
-- [ ] **Step 9: Verify green**
+to:
+
+```tsx
+        <Section key={section.heading} surface={nextBand()}>
+```
+
+Then remove the now-unused `si` parameter from that `.map()` callback, so it
+reads `{service.sections.map((section) => (`. ESLint fails the build on unused
+parameters.
+
+Insert `<IndexProof>` immediately after the closing `))}` of that map and
+before the founding-checklist `<Section>`:
+
+```tsx
+      {service.indexMetric && (
+        <IndexProof metric={service.indexMetric} surface={nextBand()} />
+      )}
+```
+
+Change the founding-checklist section from:
+
+```tsx
+      <Section surface={service.sections.length % 2 === 0}>
+```
+
+to:
+
+```tsx
+      <Section surface={nextBand()}>
+```
+
+Also delete the three-line comment above it that begins "Continues the
+alternating band" — it describes the arithmetic you just removed.
+
+- [ ] **Step 9: Accept the `surface` prop in `<IndexProof>`**
+
+In `src/components/IndexProof.tsx`, change the signature from:
+
+```tsx
+export function IndexProof({ metric }: { metric: string }) {
+```
+
+to:
+
+```tsx
+export function IndexProof({
+  metric,
+  surface = true,
+}: {
+  metric: string;
+  /** Supplied by ServicePage's band counter so the stripe never collides. */
+  surface?: boolean;
+}) {
+```
+
+and change its `<Section surface className="!py-14">` to
+`<Section surface={surface} className="!py-14">`.
+
+The inner card uses `bg-[var(--bg-base)]`, which would disappear against a base
+band. Make it contrast with whichever band it sits on:
+
+```tsx
+          <div
+            className={`flex flex-col gap-8 border-l-4 border-[var(--accent-lime)] p-8 sm:p-10 lg:flex-row lg:items-center lg:gap-12 ${
+              surface ? "bg-[var(--bg-base)]" : "bg-[var(--bg-surface)]"
+            }`}
+          >
+
+- [ ] **Step 10: Verify green**
 
 ```bash
 npm test && npx tsc --noEmit && npx eslint src --max-warnings=0 && npm run build
 ```
 
-- [ ] **Step 10: Verify visually**
+- [ ] **Step 11: Verify visually, including the two collision cases**
 
 ```bash
 npm run start -- -p 3200
 ```
 
-Open `http://localhost:3200/classes/pilates` — expect the lime-bordered band reading "What we track here: Mobility and movement quality".
-Open `http://localhost:3200/classes/ride` — expect **no** band, and confirm no two adjacent sections share a background.
+- `http://localhost:3200/classes/pilates` (2 content sections) — expect the lime-bordered band reading "What we track here: Mobility and movement quality".
+- `http://localhost:3200/classes/hiit` (**1** content section) — expect the band present and, critically, that it does **not** share a background with the section directly above it.
+- `http://localhost:3200/classes/ride` (**0** content sections) — expect **no** band at all.
 
-- [ ] **Step 11: Commit**
+On all three, confirm no two adjacent sections share a background colour.
+
+- [ ] **Step 12: Commit**
 
 ```bash
 git add src/content/services.ts src/content/services.test.ts src/components/IndexProof.tsx src/components/ServicePage.tsx
@@ -1512,7 +1604,14 @@ import { Container, Section, SectionHeading } from "./Section";
  * a personal-training reader sees other training programs — because those are
  * the genuinely comparable alternatives.
  */
-export function MoreServices({ current }: { current: Service }) {
+export function MoreServices({
+  current,
+  surface = true,
+}: {
+  current: Service;
+  /** Supplied by ServicePage's band counter so the strip never collides. */
+  surface?: boolean;
+}) {
   const siblings = (current.group === "classes" ? classes : training).filter(
     (s) => s.slug !== current.slug,
   );
@@ -1520,7 +1619,7 @@ export function MoreServices({ current }: { current: Service }) {
   if (siblings.length === 0) return null;
 
   return (
-    <Section surface>
+    <Section surface={surface}>
       <Container>
         <SectionHeading
           eyebrow="Keep looking"
@@ -1562,21 +1661,30 @@ In `src/components/ServicePage.tsx`, add the import:
 import { MoreServices } from "./MoreServices";
 ```
 
-Insert immediately **before** the closing CTA `<Section>`:
+Insert immediately **before** the closing CTA `<Section>`, feeding it the same
+band counter introduced in Task 5:
 
 ```tsx
-      <MoreServices current={service} />
+      <MoreServices current={service} surface={nextBand()} />
 ```
 
-- [ ] **Step 3: Fix the closing CTA band colour**
+- [ ] **Step 3: Route the closing CTA through the counter too**
 
-`<MoreServices>` renders on `surface`, so the closing CTA must sit on the base canvas. In `src/components/ServicePage.tsx`, confirm the closing CTA section reads:
+The closing CTA is the last band on the page, so it must also take its colour
+from the counter rather than being fixed. In `src/components/ServicePage.tsx`,
+change:
 
 ```tsx
       <Section className="border-t border-[var(--bg-elevated)]">
 ```
 
-with no `surface` prop. If it has one, remove it.
+to:
+
+```tsx
+      <Section
+        surface={nextBand()}
+        className="border-t border-[var(--bg-elevated)]"
+      >
 
 - [ ] **Step 4: Verify green**
 
@@ -1590,8 +1698,11 @@ npm test && npx tsc --noEmit && npx eslint src --max-warnings=0 && npm run build
 npm run start -- -p 3200
 ```
 
-Open `http://localhost:3200/classes/pilates` — expect four sibling class cards, not including Pilates itself.
-Open `http://localhost:3200/personal-training` — expect two sibling training cards.
+- `http://localhost:3200/classes/pilates` — expect four sibling class cards, not including Pilates itself.
+- `http://localhost:3200/personal-training` — expect two sibling training cards.
+- `http://localhost:3200/classes/ride` — the case the old arithmetic broke. Ride has no content sections and no `<IndexProof>`, so verify the strip and the closing CTA still alternate correctly against the checklist above them.
+
+Walk each of the eight service pages top to bottom and confirm no two adjacent sections share a background colour.
 
 - [ ] **Step 6: Commit**
 
