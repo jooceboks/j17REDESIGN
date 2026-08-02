@@ -37,6 +37,25 @@ npm run check:contrast     # another
 It is not wired into `npm test` because it needs a running server. Run it
 before shipping design changes.
 
+### Mobile audit
+
+This audience is heavily mobile, so the same idea applies to layout. Against a
+running server:
+
+```bash
+npm run check:mobile
+```
+
+It drives iPhone SE (375px) and iPhone 14 (390px) across 14 routes and fails on:
+
+- horizontal page overflow, naming the element responsible
+- tap targets under 24x24 (WCAG 2.5.8 AA); buttons and header controls are
+  held to 44 (Apple HIG)
+- text under 12px
+
+Content that pans inside its own `overflow-x` container is exempt — that is
+deliberate for the Index report panels and the classes comparison table.
+
 > **If it reports failures on every element at once**, the stylesheet did not
 > load — the script aborts and tells you so. The usual cause is a stale
 > `next start` still holding the port while `.next` was rebuilt underneath it.
