@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { asset, siteConfig } from "@/config/site";
 import type { Service } from "@/content/services";
 import { BookingCTA, WaitlistCTA } from "./CTA";
+import { IndexProof } from "./IndexProof";
 import { Reveal } from "./Reveal";
 import { CheckList, Container, Section, SectionHeading } from "./Section";
 
@@ -14,6 +15,17 @@ import { CheckList, Container, Section, SectionHeading } from "./Section";
  * Change the layout once, and all eight pages change.
  */
 export function ServicePage({ service }: { service: Service }) {
+  /**
+   * Section backgrounds alternate so no two adjacent bands match.
+   *
+   * Call this once per <Section> in render order instead of hand-computing
+   * indices — that arithmetic silently breaks whenever a section is inserted
+   * mid-page. The intro section below is the base canvas, so the first call
+   * (the first content section) returns surface.
+   */
+  let bandIndex = 0;
+  const nextBand = () => bandIndex++ % 2 === 0;
+
   return (
     <>
       {/* ---------------- Hero ---------------- */}
@@ -76,8 +88,8 @@ export function ServicePage({ service }: { service: Service }) {
       </Section>
 
       {/* ---------------- Content sections ---------------- */}
-      {service.sections.map((section, si) => (
-        <Section key={section.heading} surface={si % 2 === 0}>
+      {service.sections.map((section) => (
+        <Section key={section.heading} surface={nextBand()}>
           <Container>
             <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
               <div className="lg:col-span-5">
@@ -132,11 +144,13 @@ export function ServicePage({ service }: { service: Service }) {
         </Section>
       ))}
 
+      {/* ---------------- Performance Index proof ---------------- */}
+      {service.indexMetric && (
+        <IndexProof metric={service.indexMetric} surface={nextBand()} />
+      )}
+
       {/* ---------------- Founding checklist + serving ---------------- */}
-      {/* Continues the alternating band. With an even number of content
-          sections the last one landed on the base color, so this must be
-          surface to avoid two adjacent dark blocks merging into one. */}
-      <Section surface={service.sections.length % 2 === 0}>
+      <Section surface={nextBand()}>
         <Container>
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
             <div className="lg:col-span-5">
@@ -159,7 +173,10 @@ export function ServicePage({ service }: { service: Service }) {
       </Section>
 
       {/* ---------------- Closing CTA ---------------- */}
-      <Section className="border-t border-[var(--bg-elevated)]">
+      <Section
+        surface={nextBand()}
+        className="border-t border-[var(--bg-elevated)]"
+      >
         <Container>
           <Reveal className="max-w-3xl">
             <h2 className="type-h2">

@@ -50,6 +50,14 @@ export type Service = {
    */
   serving: string;
 
+  /**
+   * What the Performance Index™ measures for this specific activity.
+   *
+   * Sourced from copy already in the archive. Left undefined where the archive
+   * makes no Index claim — Ride is the only such case. Do not invent one.
+   */
+  indexMetric?: string;
+
   /** Booking CTA label. Routes through siteConfig.bookingUrl. */
   bookingLabel: string;
 
@@ -124,6 +132,7 @@ export const services: Service[] = [
       "Progress tracked with the Performance Index™",
     ],
     serving: "Richmond Hill, Markham, and Vaughan",
+    indexMetric: "Mobility and movement quality",
     bookingLabel: "Book a Reformer Class",
     primaryAction: "waitlist",
     cardBlurb:
@@ -176,6 +185,7 @@ export const services: Service[] = [
       "Mobility tracked with the Performance Index™",
     ],
     serving: "Richmond Hill, Markham, and Vaughan",
+    indexMetric: "Mobility",
     bookingLabel: "View the Yoga Schedule",
     primaryAction: "waitlist",
     cardBlurb: "Slow flow, power, and hot yoga.",
@@ -235,6 +245,7 @@ export const services: Service[] = [
       "Strength tracked with the Performance Index™",
     ],
     serving: "Richmond Hill, Markham, and Vaughan",
+    indexMetric: "Strength numbers",
     bookingLabel: "Start Training",
     primaryAction: "waitlist",
     cardBlurb:
@@ -289,6 +300,7 @@ export const services: Service[] = [
       "Conditioning tracked with the Performance Index™",
     ],
     serving: "Richmond Hill, Markham, and Vaughan",
+    indexMetric: "Conditioning",
     bookingLabel: "View the HIIT Schedule",
     primaryAction: "waitlist",
     cardBlurb: "Short, hard, effective conditioning.",
@@ -391,6 +403,7 @@ export const services: Service[] = [
       "Available at all four J17 locations",
     ],
     serving: "Markham, Oakville, Mississauga, and Richmond Hill",
+    indexMetric: "Strength, mobility and movement",
     bookingLabel: "Book Your Assessment",
     primaryAction: "enquiry",
     cardBlurb:
@@ -445,6 +458,7 @@ export const services: Service[] = [
       "Available at all four J17 locations",
     ],
     serving: "Markham, Oakville, Mississauga, and Richmond Hill",
+    indexMetric: "Strength, power, speed, mobility and movement quality",
     bookingLabel: "Book a Performance Assessment",
     primaryAction: "enquiry",
     cardBlurb:
@@ -499,6 +513,7 @@ export const services: Service[] = [
       "Available at all four J17 locations",
     ],
     serving: "Markham, Oakville, Mississauga, and Richmond Hill",
+    indexMetric: "Strength, speed and movement quality",
     bookingLabel: "Book a Youth Assessment",
     primaryAction: "enquiry",
     cardBlurb:

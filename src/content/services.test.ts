@@ -55,6 +55,18 @@ describe("services data", () => {
     }
   });
 
+  it("gives every service an indexMetric except Ride", () => {
+    // The archive makes no Performance Index claim for Ride. Do not invent
+    // one — flag the gap to the client instead.
+    for (const s of services) {
+      if (s.slug === "ride") {
+        expect(s.indexMetric).toBeUndefined();
+      } else {
+        expect(s.indexMetric).toBeTruthy();
+      }
+    }
+  });
+
   it("looks services up by slug", () => {
     expect(getService("pilates")?.name).toBe("Reformer Pilates");
     expect(getService("nope")).toBeUndefined();
