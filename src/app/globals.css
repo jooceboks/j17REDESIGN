@@ -1,0 +1,294 @@
+@import "tailwindcss";
+
+/* ============================================================
+   J17 FITNESS — DESIGN TOKENS
+   Source of truth: DESIGN_SYSTEM.md
+   Accent is #D7FB00 (the live site's lime), per client direction.
+   ============================================================ */
+
+:root {
+  --bg-base: #0a0a0a;
+  --bg-surface: #141414;
+  --bg-elevated: #1f1f1f;
+  --accent-lime: #d7fb00;
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0a0;
+  --text-muted: #666666;
+
+  /* Motion */
+  --ease-snap: cubic-bezier(0.16, 1, 0.3, 1);
+  --speed-fast: 150ms;
+  --speed-medium: 300ms;
+  --speed-slow: 600ms;
+}
+
+@theme inline {
+  --color-base: var(--bg-base);
+  --color-surface: var(--bg-surface);
+  --color-elevated: var(--bg-elevated);
+  --color-lime: var(--accent-lime);
+  --color-ink: var(--text-primary);
+  --color-ink-secondary: var(--text-secondary);
+  --color-ink-muted: var(--text-muted);
+
+  --font-display: var(--font-archivo);
+  --font-sans: var(--font-inter);
+
+  --ease-snap: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+
+html {
+  scroll-behavior: smooth;
+  /* Clearance so anchor targets don't hide under the fixed header */
+  scroll-padding-top: 6rem;
+}
+
+body {
+  background-color: var(--bg-base);
+  color: var(--text-secondary);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: var(--accent-lime);
+  color: var(--bg-base);
+}
+
+/* Visible focus ring for keyboard users on a dark canvas */
+:focus-visible {
+  outline: 2px solid var(--accent-lime);
+  outline-offset: 3px;
+}
+
+/* ============================================================
+   TYPOGRAPHY
+   Display face is Archivo with its variable width axis pushed
+   to the maximum (125) at weight 900 — the free stand-in for
+   Druk Wide.
+   ============================================================ */
+
+.font-display {
+  font-family: var(--font-archivo), system-ui, sans-serif;
+  font-variation-settings: "wdth" 125, "wght" 900;
+  text-transform: uppercase;
+}
+
+.type-h1 {
+  font-family: var(--font-archivo), system-ui, sans-serif;
+  font-variation-settings: "wdth" 125, "wght" 900;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 0.95;
+  color: var(--text-primary);
+  font-size: clamp(2.25rem, 6.5vw, 5.5rem);
+}
+
+.type-h2 {
+  font-family: var(--font-archivo), system-ui, sans-serif;
+  font-variation-settings: "wdth" 118, "wght" 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1.05;
+  color: var(--text-primary);
+  font-size: clamp(1.75rem, 4vw, 3rem);
+}
+
+.type-h3 {
+  font-family: var(--font-archivo), system-ui, sans-serif;
+  font-variation-settings: "wdth" 110, "wght" 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+  color: var(--text-primary);
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+}
+
+/* Eyebrow / tagline: wide-tracked uppercase, secondary gray */
+.type-eyebrow {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+
+.type-body {
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-surface);
+  border: none;
+  border-left: 4px solid var(--accent-lime);
+  color: var(--text-primary);
+  padding: 16px 32px;
+  font-weight: 700;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: all var(--speed-fast) var(--ease-snap);
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: var(--accent-lime);
+  color: var(--bg-base);
+  box-shadow: 0 0 15px rgba(215, 251, 0, 0.25);
+}
+
+.btn-primary:active {
+  transform: translateY(2px) scale(0.99);
+  box-shadow: none;
+}
+
+/* Secondary: outlined, fills on hover */
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: 1px solid var(--text-muted);
+  color: var(--text-primary);
+  padding: 16px 32px;
+  font-weight: 700;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: all var(--speed-fast) var(--ease-snap);
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  border-color: var(--text-primary);
+  background-color: var(--bg-elevated);
+}
+
+.btn-secondary:active {
+  transform: translateY(2px) scale(0.99);
+}
+
+/* ============================================================
+   CARDS
+   ============================================================ */
+
+.card {
+  position: relative;
+  background: var(--bg-surface);
+  overflow: hidden;
+  border-bottom: 2px solid transparent;
+  transition: transform var(--speed-medium) var(--ease-snap),
+    border-color var(--speed-medium) var(--ease-snap);
+}
+
+.card:hover {
+  border-bottom-color: var(--accent-lime);
+  transform: translateY(-4px);
+}
+
+.card-image {
+  transition: transform var(--speed-slow) var(--ease-snap);
+}
+
+.card:hover .card-image {
+  transform: scale(1.05);
+}
+
+/* ============================================================
+   SCROLL & ENTRANCE ANIMATIONS
+   Elements start hidden and are revealed by <Reveal> once they
+   intersect the viewport. Stagger comes from --reveal-delay.
+   ============================================================ */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity var(--speed-slow) var(--ease-snap),
+    transform var(--speed-slow) var(--ease-snap);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal[data-visible="true"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .card,
+  .card-image,
+  .btn-primary,
+  .btn-secondary {
+    transition: none;
+  }
+
+  .card:hover,
+  .card:hover .card-image,
+  .btn-primary:active,
+  .btn-secondary:active {
+    transform: none;
+  }
+}
+
+/* ============================================================
+   UTILITIES
+   ============================================================ */
+
+/* Giant low-opacity brand text sitting behind foreground content */
+.watermark {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-archivo), system-ui, sans-serif;
+  font-variation-settings: "wdth" 125, "wght" 900;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  opacity: 0.04;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+/* Dark gradients that blend photography into the base canvas */
+.img-scrim {
+  background: linear-gradient(
+    to top,
+    rgba(10, 10, 10, 0.95) 0%,
+    rgba(10, 10, 10, 0.8) 35%,
+    rgba(10, 10, 10, 0.2) 100%
+  );
+}
+
+.img-scrim-side {
+  background: linear-gradient(
+    to right,
+    rgba(10, 10, 10, 0.95) 0%,
+    rgba(10, 10, 10, 0.7) 45%,
+    rgba(10, 10, 10, 0.15) 100%
+  );
+}
