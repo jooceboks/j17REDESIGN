@@ -129,7 +129,7 @@ export default function ClassesHubPage() {
                       <th scope="row" className="px-4 py-5 align-top">
                         <Link
                           href={service.href}
-                          className="type-h3 !text-base transition-colors duration-150 hover:text-[var(--accent-lime)]"
+                          className="font-display text-base tracking-[0.04em] text-[var(--text-primary)] transition-colors duration-150 hover:text-[var(--accent-lime)]"
                         >
                           {service.name}
                         </Link>

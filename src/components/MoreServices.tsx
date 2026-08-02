@@ -52,7 +52,9 @@ export function MoreServices({
                   />
                 </div>
                 <div className="p-6">
-                  <h3 className="type-h3 !text-base">{service.name}</h3>
+                  <h3 className="font-display text-base tracking-[0.04em] text-[var(--text-primary)]">
+                    {service.name}
+                  </h3>
                 </div>
               </Link>
             </Reveal>

@@ -23,7 +23,16 @@
 }
 
 @theme inline {
-  --color-base: var(--bg-base);
+  /*
+   * Do NOT name a color token `base`.
+   *
+   * Tailwind generates a `text-{name}` colour utility from every --color-*
+   * token, and `text-base` is already Tailwind's built-in font-size utility.
+   * A token called `base` shadows it, so `text-base` silently paints text
+   * #0a0a0a — black on our black canvas — instead of setting 1rem type.
+   * Same hazard applies to xs / sm / lg / xl and any other font-size name.
+   */
+  --color-canvas: var(--bg-base);
   --color-surface: var(--bg-surface);
   --color-elevated: var(--bg-elevated);
   --color-lime: var(--accent-lime);
