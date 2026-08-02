@@ -1,13 +1,9 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { WaitlistCTA } from "@/components/CTA";
+import { ComingSoon } from "@/components/ComingSoon";
 import { Reveal } from "@/components/Reveal";
-import {
-  CheckList,
-  Container,
-  Section,
-  SectionHeading,
-} from "@/components/Section";
+import { Container, Section, SectionHeading } from "@/components/Section";
 import { asset, siteConfig } from "@/config/site";
 
 /**
@@ -113,37 +109,19 @@ export default function CafePage() {
         </Container>
       </Section>
 
-      {/* ---------------- What to expect ---------------- */}
-      <Section>
-        <Container>
-          <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
-            <div className="lg:col-span-5">
-              <SectionHeading eyebrow="What to expect" title="Opening with the club" />
-            </div>
-            <div className="lg:col-span-7">
-              <CheckList
-                items={[
-                  "On-site at the Richmond Hill flagship",
-                  "Healthy, performance-focused meals",
-                  "Steps from the strength floor and the recovery zone",
-                  "Opening with the club",
-                ]}
-              />
-              <Reveal delay={400}>
-                {/* TODO: café copy — menu, hours, ordering, and whether it is
-                    open to non-members all need client input. */}
-                <p className="type-body mt-10">
-                  The full menu is still being built. Join the founding waitlist
-                  and we&apos;ll share it as soon as it&apos;s set.
-                </p>
-                <p className="type-eyebrow mt-8 border-l-4 border-[var(--accent-lime)] pl-5">
-                  At our Richmond Hill flagship
-                </p>
-              </Reveal>
-            </div>
-          </div>
-        </Container>
-      </Section>
+      {/* TODO: cafe copy. Menu, hours, ordering, and whether it is open to
+          non-members all need client input. */}
+      <ComingSoon
+        eyebrow="What to expect"
+        headline="The menu is still being built"
+        body="The caf\u00e9 opens with the club. We are not going to guess at a menu before it exists."
+        points={[
+          "On-site at the Richmond Hill flagship",
+          "Healthy, performance-focused meals",
+          "Steps from the strength floor and the recovery zone",
+        ]}
+        timing="At our Richmond Hill flagship"
+      />
 
       {/* ---------------- Closing CTA ---------------- */}
       <Section surface className="border-t border-[var(--bg-elevated)]">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 import { submitForm, type FormKind } from "@/lib/submitForm";
 
 type Status = "idle" | "submitting" | "success" | "error";
@@ -62,16 +62,19 @@ function FormStatus({ status, message }: { status: Status; message: string }) {
 
 export function ContactForm() {
   const { status, message, handleSubmit } = useFormSubmit("contact");
+  // Unique per instance so labels stay correctly associated even if two
+  // forms render on the same page.
+  const uid = useId();
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="grid gap-6 sm:grid-cols-2">
         <div>
-          <label htmlFor="contact-name" className={labelClass}>
+          <label htmlFor={`${uid}-contact-name`} className={labelClass}>
             Name
           </label>
           <input
-            id="contact-name"
+            id={`${uid}-contact-name`}
             name="name"
             type="text"
             required
@@ -81,11 +84,11 @@ export function ContactForm() {
           />
         </div>
         <div>
-          <label htmlFor="contact-email" className={labelClass}>
+          <label htmlFor={`${uid}-contact-email`} className={labelClass}>
             Email
           </label>
           <input
-            id="contact-email"
+            id={`${uid}-contact-email`}
             name="email"
             type="email"
             required
@@ -98,11 +101,11 @@ export function ContactForm() {
 
       <div className="grid gap-6 sm:grid-cols-2">
         <div>
-          <label htmlFor="contact-phone" className={labelClass}>
+          <label htmlFor={`${uid}-contact-phone`} className={labelClass}>
             Phone <span className="font-normal normal-case">(optional)</span>
           </label>
           <input
-            id="contact-phone"
+            id={`${uid}-contact-phone`}
             name="phone"
             type="tel"
             autoComplete="tel"
@@ -111,11 +114,11 @@ export function ContactForm() {
           />
         </div>
         <div>
-          <label htmlFor="contact-location" className={labelClass}>
+          <label htmlFor={`${uid}-contact-location`} className={labelClass}>
             Location
           </label>
           <select
-            id="contact-location"
+            id={`${uid}-contact-location`}
             name="location"
             defaultValue=""
             className={fieldClass}
@@ -130,11 +133,11 @@ export function ContactForm() {
       </div>
 
       <div>
-        <label htmlFor="contact-message" className={labelClass}>
+        <label htmlFor={`${uid}-contact-message`} className={labelClass}>
           Message
         </label>
         <textarea
-          id="contact-message"
+          id={`${uid}-contact-message`}
           name="message"
           required
           rows={6}
@@ -158,16 +161,18 @@ export function ContactForm() {
 
 export function WaitlistForm() {
   const { status, message, handleSubmit } = useFormSubmit("waitlist");
+  // Unique per instance: /locations renders this twice (tour + story).
+  const uid = useId();
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="grid gap-6 sm:grid-cols-2">
         <div>
-          <label htmlFor="waitlist-name" className={labelClass}>
+          <label htmlFor={`${uid}-waitlist-name`} className={labelClass}>
             Name
           </label>
           <input
-            id="waitlist-name"
+            id={`${uid}-waitlist-name`}
             name="name"
             type="text"
             required
@@ -177,11 +182,11 @@ export function WaitlistForm() {
           />
         </div>
         <div>
-          <label htmlFor="waitlist-email" className={labelClass}>
+          <label htmlFor={`${uid}-waitlist-email`} className={labelClass}>
             Email
           </label>
           <input
-            id="waitlist-email"
+            id={`${uid}-waitlist-email`}
             name="email"
             type="email"
             required
@@ -193,11 +198,11 @@ export function WaitlistForm() {
       </div>
 
       <div>
-        <label htmlFor="waitlist-interest" className={labelClass}>
+        <label htmlFor={`${uid}-waitlist-interest`} className={labelClass}>
           What are you most interested in?
         </label>
         <select
-          id="waitlist-interest"
+          id={`${uid}-waitlist-interest`}
           name="interest"
           defaultValue=""
           className={fieldClass}

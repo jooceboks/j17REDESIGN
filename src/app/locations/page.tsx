@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { BookingCTA, WaitlistCTA } from "@/components/CTA";
+import { ComingSoon } from "@/components/ComingSoon";
 import { JsonLd, locationSchema } from "@/components/JsonLd";
 import { Reveal } from "@/components/Reveal";
 import { Container, Section, SectionHeading } from "@/components/Section";
@@ -96,70 +97,38 @@ export default function LocationsPage() {
         </Container>
       </Section>
 
-      {/* ---------------- Take the Tour ---------------- */}
-      <Section surface id="tour">
-        <Container>
-          <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
-            <div className="lg:col-span-5">
-              <SectionHeading eyebrow="The Space" title="Take the tour" />
-            </div>
-            <Reveal className="lg:col-span-7" delay={100}>
-              <p className="type-body text-lg">
-                10,000 square feet under one roof in Richmond Hill: a full
-                strength floor, dedicated class studios for Pilates, yoga, HIIT
-                and Ride, a complete recovery zone with sauna, cold plunge and
-                red light therapy, and a healthy café.
-              </p>
-              {/*
-                TODO: real tour content. The homepage has linked "Take the Tour"
-                here since launch but no tour ever existed. This needs either a
-                photo gallery, a floor plan, or a walkthrough video from the
-                client. Copy above is assembled from facts already stated
-                elsewhere on the site — no new claims.
-              */}
-              <p className="type-body mt-6">
-                We&apos;ll be sharing the full walkthrough as the build finishes.
-                Join the founding waitlist and we&apos;ll send it to you first.
-              </p>
-              <div className="mt-10 flex flex-wrap gap-4">
-                <WaitlistCTA variant="primary" />
-                <BookingCTA variant="secondary">Book a Visit</BookingCTA>
-              </div>
-            </Reveal>
-          </div>
-        </Container>
-      </Section>
+      {/* TODO: replace with the real tour (photo gallery, floor plan or
+          walkthrough video) once the client supplies it. */}
+      <ComingSoon
+        surface
+        id="tour"
+        eyebrow="The Space"
+        headline="The tour is coming"
+        body="10,000 square feet under one roof in Richmond Hill. The walkthrough goes live as the build finishes."
+        points={[
+          "A full strength floor",
+          "Dedicated studios for Pilates, yoga, HIIT and Ride",
+          "A recovery zone with sauna, cold plunge and red light therapy",
+          "An on-site healthy caf\u00e9",
+        ]}
+        timing="Opening with the Richmond Hill flagship"
+      />
 
-      {/* ---------------- Our Story ---------------- */}
-      <Section id="story">
-        <Container>
-          <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
-            <div className="lg:col-span-5">
-              <SectionHeading eyebrow="Our Story" title="Where this came from" />
-            </div>
-            <Reveal className="lg:col-span-7" delay={100}>
-              <p className="type-body text-lg">
-                For years we&apos;ve coached this community out of Markham,
-                Oakville and Mississauga. Richmond Hill is where it all comes
-                together: coached classes, a full recovery zone and a healthy
-                café under one roof, with the J17 Performance Index™ running
-                underneath all of it.
-              </p>
-              {/*
-                TODO: real story content. The homepage links "Our Story" here.
-                Needs founding year, the founders' background, and why J17
-                started — none of which appears anywhere in the site archive,
-                so it has to come from the client.
-              */}
-              <p className="type-body mt-6">
-                What hasn&apos;t changed is how we work. Every session is
-                coached, every plan is built around you, and progress is
-                measured, not guessed at.
-              </p>
-            </Reveal>
-          </div>
-        </Container>
-      </Section>
+      {/* TODO: replace with the real story once the client supplies founding
+          year, the founders' background and why J17 started. None of that
+          appears anywhere in the site archive. */}
+      <ComingSoon
+        id="story"
+        eyebrow="Our Story"
+        headline="The full story is coming"
+        body="For years we have coached this community out of Markham, Oakville and Mississauga. Richmond Hill is where it all comes together."
+        points={[
+          "Coached classes, a recovery zone and a caf\u00e9 under one roof",
+          "The J17 Performance Index\u2122 running underneath all of it",
+          "Every session coached, every plan built around you",
+        ]}
+        timing="Opening with the Richmond Hill flagship"
+      />
 
       {/* ---------------- Existing locations ---------------- */}
       <Section surface>
