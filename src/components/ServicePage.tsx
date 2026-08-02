@@ -4,6 +4,7 @@ import { asset, siteConfig } from "@/config/site";
 import type { Service } from "@/content/services";
 import { BookingCTA, WaitlistCTA } from "./CTA";
 import { IndexProof } from "./IndexProof";
+import { MoreServices } from "./MoreServices";
 import { Reveal } from "./Reveal";
 import { CheckList, Container, Section, SectionHeading } from "./Section";
 
@@ -171,6 +172,9 @@ export function ServicePage({ service }: { service: Service }) {
           </div>
         </Container>
       </Section>
+
+      {/* ---------------- Sibling services ---------------- */}
+      <MoreServices current={service} surface={nextBand()} />
 
       {/* ---------------- Closing CTA ---------------- */}
       <Section

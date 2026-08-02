@@ -37,23 +37,42 @@ export function ReportFigure({
   maxWidth?: number;
 }) {
   return (
-    <Reveal>
-      <figure className="m-0" style={maxWidth ? { maxWidth } : undefined}>
-        <div className="overflow-hidden border border-[var(--bg-elevated)] bg-[var(--bg-base)]">
-          <Image
-            src={src}
-            alt={alt}
-            width={width}
-            height={height}
-            priority={priority}
-            sizes={
-              maxWidth
-                ? `(max-width: ${maxWidth}px) 100vw, ${maxWidth}px`
-                : "(max-width: 1280px) 100vw, 1280px"
-            }
-            className="h-auto w-full"
-          />
+    // The Reveal wrapper is the actual flex/grid item on the pages that use
+    // this, so min-w-0 has to live here too — not just on the <figure>.
+    <Reveal className="w-full min-w-0">
+      {/* min-w-0 matters: as a flex item this would otherwise default to
+          min-width:auto and refuse to shrink below the panel's intrinsic
+          width, pushing the whole page into horizontal scroll on mobile. */}
+      <figure
+        className="m-0 w-full min-w-0"
+        style={maxWidth ? { maxWidth } : undefined}
+      >
+        {/*
+          These panels carry real type at small sizes. Squeezed into a 375px
+          phone they become unreadable, so below `sm` the panel keeps a
+          legible minimum width and pans inside its own scroll container.
+          The page body never scrolls sideways as a result.
+        */}
+        <div className="overflow-x-auto border border-[var(--bg-elevated)] bg-[var(--bg-base)]">
+          <div className="min-w-[42rem] sm:min-w-0">
+            <Image
+              src={src}
+              alt={alt}
+              width={width}
+              height={height}
+              priority={priority}
+              sizes={
+                maxWidth
+                  ? `(max-width: ${maxWidth}px) 100vw, ${maxWidth}px`
+                  : "(max-width: 1280px) 100vw, 1280px"
+              }
+              className="h-auto w-full"
+            />
+          </div>
         </div>
+        <p className="mt-3 text-xs text-[var(--text-muted)] sm:hidden">
+          Swipe the panel to see all of it
+        </p>
         <figcaption className="type-eyebrow mt-5 border-l-4 border-[var(--accent-lime)] pl-5">
           {caption}
         </figcaption>

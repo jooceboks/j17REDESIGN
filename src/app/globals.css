@@ -89,6 +89,15 @@ body {
   font-size: clamp(2.25rem, 6.5vw, 5.5rem);
 }
 
+/* Ultra-wide caps are the first thing to overflow on a 375px screen. Easing
+   the width axis keeps the headline on three lines instead of four or five. */
+@media (max-width: 639px) {
+  .type-h1 {
+    font-variation-settings: "wdth" 110, "wght" 900;
+    letter-spacing: 0.02em;
+  }
+}
+
 .type-h2 {
   font-family: var(--font-archivo), system-ui, sans-serif;
   font-variation-settings: "wdth" 118, "wght" 800;

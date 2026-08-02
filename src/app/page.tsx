@@ -87,7 +87,7 @@ export default function HomePage() {
   return (
     <>
       {/* ==================== HERO ==================== */}
-      <section className="relative flex min-h-[92vh] items-center overflow-hidden pt-20">
+      <section className="relative flex min-h-[85vh] items-center overflow-hidden pt-20 sm:min-h-[92vh]">
         {/* TODO: replace with final hero photography. The old site's own
             about-section images (img/14.jpg, img/15.jpg) are only 414x586,
             far too small to run full-bleed, so this uses the largest
@@ -241,9 +241,15 @@ export default function HomePage() {
             lead="Five group classes at the Richmond Hill flagship — all coached, all part of the same measured plan."
           />
 
-          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {/* Five stacked cards is a long scroll on a phone. Below sm this
+              becomes one swipeable row; from sm up it is the normal grid. */}
+          <div className="-mx-5 mt-14 flex snap-x snap-mandatory gap-6 overflow-x-auto px-5 pb-4 sm:mx-0 sm:grid sm:snap-none sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-3">
             {classes.map((service, i) => (
-              <Reveal key={service.slug} delay={i * 100}>
+              <Reveal
+                key={service.slug}
+                delay={i * 100}
+                className="w-[78vw] shrink-0 snap-start sm:w-auto sm:shrink"
+              >
                 <Link href={service.href} className="card group block h-full">
                   <div className="relative aspect-[4/3] overflow-hidden">
                     <Image
