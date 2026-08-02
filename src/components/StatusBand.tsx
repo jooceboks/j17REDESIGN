@@ -13,9 +13,13 @@ export function StatusBand() {
     .filter((l) => l.status === "open")
     .map((l) => l.city);
 
-  // "Markham, Oakville & Mississauga"
-  const cityList =
-    openCities.slice(0, -1).join(", ") + " & " + openCities.at(-1);
+  // "Markham, Oakville & Mississauga". Intl handles the 0/1/2-item cases —
+  // naive slice-and-join produced a dangling " & Markham" with one location,
+  // which is reachable as soon as the client opens or closes a site.
+  const cityList = new Intl.ListFormat("en-CA", {
+    style: "long",
+    type: "conjunction",
+  }).format(openCities);
 
   return (
     <div className="border-y border-[var(--bg-elevated)] bg-[var(--bg-surface)]">

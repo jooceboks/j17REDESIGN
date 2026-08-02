@@ -47,21 +47,16 @@ describe("design tokens", () => {
   });
 });
 
-describe("utility class usage", () => {
-  it("uses no Tailwind v3 important-prefix classes", () => {
-    // v4 moved the important modifier to a suffix (`text-base!`). The v3
-    // prefix form (`!text-base`) is silently ignored rather than erroring.
-    const files = [
-      "src/components/MoreServices.tsx",
-      "src/app/classes/page.tsx",
-      "src/components/ServicePage.tsx",
-    ];
-    for (const f of files) {
-      const src = readFileSync(join(process.cwd(), f), "utf8");
-      const bad = [...src.matchAll(/className="[^"]*?(^|\s)(![a-z][\w-]*)/g)].map(
-        (m) => `${f}: ${m[2]}`,
-      );
-      expect(bad).toEqual([]);
-    }
-  });
-});
+/*
+ * Deliberately NOT tested: the `!utility` important prefix.
+ *
+ * An earlier version of this file banned it on the belief that Tailwind v4
+ * only accepts a trailing `!`. That was wrong — verified in the browser, the
+ * leading form is honoured (`!py-14` yields 56px where the base is 112px, and
+ * `!px-6 !py-3` on the header button yields 24px/12px). The prefix is used
+ * intentionally in several places to override the .btn-* and .type-* classes
+ * in globals.css, which load after Tailwind's utilities and otherwise win.
+ *
+ * The real defect that prompted all this was the colour-token collision
+ * guarded above, not the important syntax.
+ */
