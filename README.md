@@ -16,6 +16,33 @@ Before committing, all four must pass:
 npm test && npx tsc --noEmit && npx eslint src --max-warnings=0 && npm run build
 ```
 
+### Contrast audit
+
+`npm test` cannot tell you whether text is *visible* — only that it exists. A
+design-token collision once painted text `#0a0a0a` on the `#0a0a0a` canvas; it
+compiled, linted, built and passed every check. Only looking at the page caught
+it.
+
+This closes that gap. It drives the system Chrome (no Chromium download),
+walks every rendered text node on all 18 routes at desktop and mobile widths,
+resolves each one's effective background through transparent ancestors, and
+fails anything below WCAG AA:
+
+```bash
+npm run build
+npm run start -- -p 4321   # one shell
+npm run check:contrast     # another
+```
+
+It is not wired into `npm test` because it needs a running server. Run it
+before shipping design changes.
+
+> **If it reports failures on every element at once**, the stylesheet did not
+> load — the script aborts and tells you so. The usual cause is a stale
+> `next start` still holding the port while `.next` was rebuilt underneath it.
+> Note that `pkill -f "next start"` does **not** match it; the process is
+> `next-server`. Kill by port: `lsof -ti :4321 | xargs kill -9`.
+
 ### Tests
 
 `npm test` covers `src/content/` and `src/config/` only — the data layer that

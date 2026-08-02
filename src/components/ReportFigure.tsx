@@ -70,7 +70,7 @@ export function ReportFigure({
             />
           </div>
         </div>
-        <p className="mt-3 text-xs text-[var(--text-muted)] sm:hidden">
+        <p className="mt-3 text-xs text-[var(--text-secondary)] sm:hidden">
           Swipe the panel to see all of it
         </p>
         <figcaption className="type-eyebrow mt-5 border-l-4 border-[var(--accent-lime)] pl-5">

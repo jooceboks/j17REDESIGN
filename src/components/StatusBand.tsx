@@ -26,7 +26,7 @@ export function StatusBand() {
           </span>
           <span
             aria-hidden="true"
-            className="hidden text-[var(--text-muted)] sm:inline"
+            className="hidden text-[var(--text-secondary)] sm:inline"
           >
             ·
           </span>

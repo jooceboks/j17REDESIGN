@@ -144,7 +144,7 @@ export default function ClassesHubPage() {
                         {/* Ride carries no Index claim in the archive. Show the
                             gap honestly rather than inventing a metric. */}
                         {service.indexMetric ?? (
-                          <span className="text-[var(--text-muted)]">
+                          <span className="text-[var(--text-secondary)]">
                             Not tracked
                           </span>
                         )}

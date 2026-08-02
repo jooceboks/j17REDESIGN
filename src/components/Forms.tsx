@@ -6,7 +6,7 @@ import { submitForm, type FormKind } from "@/lib/submitForm";
 type Status = "idle" | "submitting" | "success" | "error";
 
 const fieldClass =
-  "w-full border border-[var(--bg-elevated)] bg-[var(--bg-elevated)] px-4 py-3.5 text-[var(--text-primary)] placeholder:text-[var(--text-muted)] transition-colors duration-150 focus:border-[var(--accent-lime)] focus:outline-none";
+  "w-full border border-[var(--bg-elevated)] bg-[var(--bg-elevated)] px-4 py-3.5 text-[var(--text-primary)] placeholder:text-[var(--text-secondary)] transition-colors duration-150 focus:border-[var(--accent-lime)] focus:outline-none";
 
 const labelClass =
   "mb-2 block text-[11px] font-bold uppercase tracking-[0.15em] text-[var(--text-secondary)]";
