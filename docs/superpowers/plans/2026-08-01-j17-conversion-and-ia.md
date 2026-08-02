@@ -1003,7 +1003,34 @@ git commit -m "feat: add the Performance Index proof band to every service that 
 
 ---
 
-### Task 6: The unplotted hexagon on `/performance-index`
+### Task 6: ~~The unplotted hexagon on `/performance-index`~~ — SUPERSEDED, DONE
+
+**Status: obsolete. Do not implement.**
+
+The client supplied four real dark-mode Performance Index report panels on
+2026-08-02, which do the job this task was inventing a substitute for. The
+synthetic hexagon existed only because no real visual was available and
+fabricating plotted data was forbidden. A genuine report beats a placeholder.
+
+Delivered instead:
+
+- `src/components/ReportFigure.tsx` — renders a report panel `object-contain`
+  at generous width with a descriptive `alt` and a caption, plus an optional
+  `maxWidth` for near-square panels.
+- Four panels wired into `/performance-index`, stored locally in
+  `public/img/index/`: `physique-overview.png`, `competency-radar.png`,
+  `growth-metrics.png`, `scorecard.png`.
+- The four old S3 images are gone from the page. They were the same report on
+  a white background with pink and red accents, clashing with the dark lime
+  theme. The hero now uses a coaching photo instead.
+
+The hexagon motif inside `<IndexProof>` (Task 5) still stands — it is a small
+decorative echo, not a data visualisation.
+
+<details>
+<summary>Original task, kept for reference</summary>
+
+### Task 6 (superseded): The unplotted hexagon on `/performance-index`
 
 "We measure things" stays abstract until someone sees what the output looks like. A **filled** radar chart is forbidden here: plotting values would fabricate a member's results.
 
@@ -1168,7 +1195,9 @@ git add src/components/IndexHexagon.tsx src/app/performance-index/page.tsx
 git commit -m "feat: show the six Index axes as an honest unplotted hexagon"
 ```
 
-**Stage B is complete and shippable here.**
+</details>
+
+**Stage B is complete and shippable once Task 5 lands (Task 6 is already done).**
 
 ---
 
