@@ -3,7 +3,7 @@ import { siteConfig } from "@/config/site";
 
 type CTAProps = {
   children: React.ReactNode;
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "quiet";
   className?: string;
 };
 

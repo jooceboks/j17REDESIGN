@@ -183,6 +183,27 @@ body {
   transform: translateY(2px) scale(0.99);
 }
 
+/* Low-emphasis inline action. Used where a button would overstate what the
+   link actually does (e.g. "booking" that only opens a contact form). */
+.btn-quiet {
+  display: inline-flex;
+  align-items: center;
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  cursor: pointer;
+  transition: color var(--speed-fast) var(--ease-snap);
+}
+
+.btn-quiet:hover {
+  color: var(--accent-lime);
+}
+
 /* ============================================================
    CARDS
    ============================================================ */

@@ -44,6 +44,17 @@ describe("services data", () => {
     expect(stripped).not.toContain("J17 Performance");
   });
 
+  it("leads class pages with the waitlist and training pages with the enquiry", () => {
+    // Richmond Hill has not opened, so a class cannot be booked. The three
+    // training locations are operating businesses and can be sold today.
+    for (const s of classes) {
+      expect(s.primaryAction).toBe("waitlist");
+    }
+    for (const s of training) {
+      expect(s.primaryAction).toBe("enquiry");
+    }
+  });
+
   it("looks services up by slug", () => {
     expect(getService("pilates")?.name).toBe("Reformer Pilates");
     expect(getService("nope")).toBeUndefined();

@@ -50,9 +50,25 @@ export function ServicePage({ service }: { service: Service }) {
             <Reveal className="lg:col-span-6" delay={100}>
               <p className="type-body text-lg">{service.intro}</p>
 
-              <div className="mt-10 flex flex-wrap gap-4">
-                <BookingCTA>{service.bookingLabel}</BookingCTA>
-                <WaitlistCTA />
+              <div className="mt-10 flex flex-wrap items-center gap-4">
+                {service.primaryAction === "enquiry" ? (
+                  <>
+                    <BookingCTA>{service.bookingLabel}</BookingCTA>
+                    <WaitlistCTA />
+                  </>
+                ) : (
+                  <>
+                    <WaitlistCTA variant="primary" />
+                    {/*
+                      There is no booking engine and the flagship is not open,
+                      so a "Book a Class" button would be a lie. This is a quiet
+                      link that says what it actually does: opens a form.
+                    */}
+                    <BookingCTA variant="quiet">
+                      Questions about classes? Get in touch
+                    </BookingCTA>
+                  </>
+                )}
               </div>
             </Reveal>
           </div>
@@ -153,9 +169,13 @@ export function ServicePage({ service }: { service: Service }) {
               Founding memberships are opening now. Join the waitlist and we&apos;ll
               reach out with founding-member rates and details before anyone else.
             </p>
-            <div className="mt-10 flex flex-wrap gap-4">
+            <div className="mt-10 flex flex-wrap items-center gap-4">
               <WaitlistCTA variant="primary" />
-              <BookingCTA variant="secondary">{service.bookingLabel}</BookingCTA>
+              {service.primaryAction === "enquiry" && (
+                <BookingCTA variant="secondary">
+                  {service.bookingLabel}
+                </BookingCTA>
+              )}
             </div>
           </Reveal>
         </Container>

@@ -52,6 +52,16 @@ export type Service = {
 
   /** Booking CTA label. Routes through siteConfig.bookingUrl. */
   bookingLabel: string;
+
+  /**
+   * Which action this page leads with.
+   *
+   * Class pages sell the Richmond Hill flagship, which has not opened, so the
+   * only conversion we can honestly offer is the waitlist. Training pages sell
+   * a service the Markham, Oakville and Mississauga gyms deliver today, so the
+   * enquiry leads there instead.
+   */
+  primaryAction: "waitlist" | "enquiry";
   /** Short teaser used on home page cards. */
   cardBlurb: string;
 };
@@ -115,6 +125,7 @@ export const services: Service[] = [
     ],
     serving: "Richmond Hill, Markham, and Vaughan",
     bookingLabel: "Book a Reformer Class",
+    primaryAction: "waitlist",
     cardBlurb:
       "Core, control and mobility on the reformer, in small coached groups.",
   },
@@ -166,6 +177,7 @@ export const services: Service[] = [
     ],
     serving: "Richmond Hill, Markham, and Vaughan",
     bookingLabel: "View the Yoga Schedule",
+    primaryAction: "waitlist",
     cardBlurb: "Slow flow, power, and hot yoga.",
   },
   {
@@ -224,6 +236,7 @@ export const services: Service[] = [
     ],
     serving: "Richmond Hill, Markham, and Vaughan",
     bookingLabel: "Start Training",
+    primaryAction: "waitlist",
     cardBlurb:
       "Programmed lifting on a full strength floor. Get strong on a plan, not by accident.",
   },
@@ -277,6 +290,7 @@ export const services: Service[] = [
     ],
     serving: "Richmond Hill, Markham, and Vaughan",
     bookingLabel: "View the HIIT Schedule",
+    primaryAction: "waitlist",
     cardBlurb: "Short, hard, effective conditioning.",
   },
   {
@@ -313,6 +327,7 @@ export const services: Service[] = [
     ],
     serving: "Richmond Hill, Markham, and Vaughan",
     bookingLabel: "Book a Ride",
+    primaryAction: "waitlist",
     cardBlurb: "High-energy indoor cycling.",
   },
 
@@ -377,6 +392,7 @@ export const services: Service[] = [
     ],
     serving: "Markham, Oakville, Mississauga, and Richmond Hill",
     bookingLabel: "Book Your Assessment",
+    primaryAction: "enquiry",
     cardBlurb:
       "One-on-one coaching on a plan built for your goal, assessed and retested.",
   },
@@ -430,6 +446,7 @@ export const services: Service[] = [
     ],
     serving: "Markham, Oakville, Mississauga, and Richmond Hill",
     bookingLabel: "Book a Performance Assessment",
+    primaryAction: "enquiry",
     cardBlurb:
       "For competitive athletes: strength, speed and power, tracked with the Performance Index™.",
   },
@@ -483,6 +500,7 @@ export const services: Service[] = [
     ],
     serving: "Markham, Oakville, Mississauga, and Richmond Hill",
     bookingLabel: "Book a Youth Assessment",
+    primaryAction: "enquiry",
     cardBlurb:
       "Long-term development for young athletes, with progress parents can actually see.",
   },
