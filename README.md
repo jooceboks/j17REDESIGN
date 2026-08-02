@@ -5,9 +5,29 @@ Rebuild of `j17performance.com` for **J17 Fitness**, a training, recovery and we
 ```bash
 npm install
 npm run dev      # http://localhost:3000
-npm run build    # production build (all 22 routes prerender static)
+npm run build    # production build (all 23 routes prerender static)
 npm run start    # serve the production build
+npm test         # Vitest, data layer only
 ```
+
+Before committing, all four must pass:
+
+```bash
+npm test && npx tsc --noEmit && npx eslint src --max-warnings=0 && npm run build
+```
+
+### Tests
+
+`npm test` covers `src/content/` and `src/config/` only — the data layer that
+all eight service pages are generated from. There are no component-rendering
+tests, deliberately: for a static marketing site they would cost more than they
+catch. What the suite does protect are the invariants that break silently:
+
+- exactly 8 services, 5 classes and 3 training, with unique slugs
+- the deliberate serving-city split (Vaughan classes-only, Oakville training-only)
+- class pages lead with the waitlist, training pages with the enquiry
+- every service has an `indexMetric` **except Ride**
+- the retired "J17 Performance" brand name never reappears outside the product name
 
 ---
 
@@ -21,6 +41,8 @@ npm run start    # serve the production build
 | Where "Book"/"Join Now"/waitlist buttons point | `src/config/site.ts` |
 | Locations (add, reorder, change address or map) | `src/config/site.ts` → `locations` |
 | Copy on any of the 8 class/training pages | `src/content/services.ts` |
+| Which CTA a page leads with | `src/content/services.ts` → `primaryAction` |
+| What the Index measures per activity | `src/content/services.ts` → `indexMetric` |
 | Nav menu or footer links | `src/content/nav.ts` |
 | Colors, type scale, buttons, cards, motion | `src/app/globals.css` |
 | Copy on a one-off page (home, recovery, café…) | that page's `src/app/**/page.tsx` |
@@ -101,6 +123,33 @@ The old site had accumulated a decade of inconsistencies. These are resolved and
 - The archive's deliberate geo split is preserved: **class** pages serve "Richmond Hill, Markham, Vaughan" (the flagship catchment), **training** pages serve "Markham, Oakville, Mississauga, Richmond Hill" (the existing business). Vaughan appears only on classes, Oakville only on training. That split is doing real local-search work — don't flatten it.
 
 ---
+
+## Conversion and IA pass
+
+A second pass fixed the design problems the faithful rebuild inherited. Spec in
+`docs/superpowers/specs/`, plan in `docs/superpowers/plans/`.
+
+- **One primary action per page.** `primaryAction` on each service decides it.
+  Class pages sell a club that has not opened, so they lead with the waitlist and
+  demote "booking" to an honest text link. Training pages sell what the Markham,
+  Oakville and Mississauga gyms deliver today, so the enquiry leads there.
+- **`<StatusBand>`** under the hero answers where and when in the first scroll.
+- **`<ComingSoon>`** replaced three dead ends (tour, story, café) with capture points.
+- **`<IndexProof>`** puts the Performance Index on all seven service pages that
+  legitimately claim it. Ride has no claim in the archive, so it gets no band.
+- **`<ReportFigure>`** renders the four client-supplied Index report panels from
+  `public/img/index/`. They pan inside their own scroll container on mobile,
+  since the type is unreadable squeezed to 375px.
+- **`/classes` hub** compares all five classes side by side.
+- **Nav** cut from seven items to six; the Index label shortened.
+
+### The band counter
+
+`<ServicePage>` alternates section backgrounds via `nextBand()` rather than
+arithmetic like `index % 2`. That arithmetic silently produced two adjacent
+identical bands whenever a section was inserted mid-page (it broke on HIIT with
+one content section, and Ride with none). Call `nextBand()` once per `<Section>`
+in render order and it stays correct as sections come and go.
 
 ## Outstanding TODOs
 
