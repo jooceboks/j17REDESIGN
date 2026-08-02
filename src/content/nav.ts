@@ -17,11 +17,13 @@ export type NavItem = NavLink & {
 };
 
 export const mainNav: NavItem[] = [
-  { label: "Home", href: "/" },
+  // "Home" is deliberately absent: the logo links there, which is the
+  // established convention and buys back horizontal room in a crowded bar.
   {
     label: "Classes",
-    href: "#",
+    href: "/classes",
     children: [
+      { label: "All Classes", href: "/classes" },
       { label: "Reformer Pilates", href: "/classes/pilates" },
       { label: "Yoga", href: "/classes/yoga" },
       { label: "Strength Training", href: "/classes/strength" },
@@ -38,11 +40,16 @@ export const mainNav: NavItem[] = [
       { label: "Youth Athletic Development", href: "/youth" },
     ],
   },
-  { label: "J17 Performance Index™", href: "/performance-index" },
+  // Recovery stays top level. It is one of the four brand pillars and a
+  // genuine differentiator, so demoting it to a dropdown would be a downgrade.
   { label: "Recovery", href: "/recovery" },
+  // Shortened from "J17 Performance Index™", which was by far the widest item
+  // in the bar. The full trademarked name still appears in page content,
+  // headings and metadata.
+  { label: "The Index", href: "/performance-index" },
   { label: "Memberships", href: "/memberships" },
   {
-    label: "About Us",
+    label: "About",
     href: "#",
     children: [
       { label: "First Timers", href: "/first-timers" },
