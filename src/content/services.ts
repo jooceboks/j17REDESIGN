@@ -51,6 +51,17 @@ export type Service = {
   serving: string;
 
   /**
+   * What this class actually develops.
+   *
+   * Deliberately an explicit field rather than an index into `checklist`.
+   * The archive's checklists are not parallel across services — position 1 is
+   * a benefit for Pilates but a facility fact for Yoga and a coaching fact for
+   * HIIT — so reading them positionally puts the wrong text under a heading.
+   * Each value below is a tight paraphrase of that service's own archive copy.
+   */
+  builds?: string;
+
+  /**
    * What the Performance Index™ measures for this specific activity.
    *
    * Sourced from copy already in the archive. Left undefined where the archive
@@ -131,6 +142,7 @@ export const services: Service[] = [
       "First-timer to advanced",
       "Progress tracked with the Performance Index™",
     ],
+    builds: "Core strength, control and mobility",
     serving: "Richmond Hill, Markham, and Vaughan",
     indexMetric: "Mobility and movement quality",
     bookingLabel: "Book a Reformer Class",
@@ -184,6 +196,7 @@ export const services: Service[] = [
       "All levels welcome",
       "Mobility tracked with the Performance Index™",
     ],
+    builds: "Mobility, calm and recovery",
     serving: "Richmond Hill, Markham, and Vaughan",
     indexMetric: "Mobility",
     bookingLabel: "View the Yoga Schedule",
@@ -244,6 +257,7 @@ export const services: Service[] = [
       "Beginners to experienced lifters",
       "Strength tracked with the Performance Index™",
     ],
+    builds: "Strength, on a programmed plan",
     serving: "Richmond Hill, Markham, and Vaughan",
     indexMetric: "Strength numbers",
     bookingLabel: "Start Training",
@@ -299,6 +313,7 @@ export const services: Service[] = [
       "Fits a real schedule",
       "Conditioning tracked with the Performance Index™",
     ],
+    builds: "Conditioning, in less time",
     serving: "Richmond Hill, Markham, and Vaughan",
     indexMetric: "Conditioning",
     bookingLabel: "View the HIIT Schedule",
@@ -337,6 +352,7 @@ export const services: Service[] = [
       "Real conditioning, best part of your day",
       "All levels welcome",
     ],
+    builds: "Conditioning, at pace",
     serving: "Richmond Hill, Markham, and Vaughan",
     bookingLabel: "Book a Ride",
     primaryAction: "waitlist",

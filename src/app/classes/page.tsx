@@ -138,7 +138,7 @@ export default function ClassesHubPage() {
                         {service.cardBlurb}
                       </td>
                       <td className="type-body px-4 py-5 align-top text-sm">
-                        {service.checklist[1]}
+                        {service.builds}
                       </td>
                       <td className="px-4 py-5 align-top text-sm text-[var(--accent-lime)]">
                         {/* Ride carries no Index claim in the archive. Show the

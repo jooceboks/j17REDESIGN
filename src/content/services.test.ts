@@ -67,6 +67,17 @@ describe("services data", () => {
     }
   });
 
+  it("gives every class an explicit `builds` value", () => {
+    // The /classes comparison table has a "What it builds" column. It must
+    // read this field, never a positional index into `checklist` — those are
+    // not parallel across services (position 1 is a benefit for Pilates but a
+    // facility fact for Yoga), so indexing them puts the wrong text under the
+    // heading. Training pages have no hub table and do not need this.
+    for (const s of classes) {
+      expect(s.builds, `${s.slug} is missing builds`).toBeTruthy();
+    }
+  });
+
   it("looks services up by slug", () => {
     expect(getService("pilates")?.name).toBe("Reformer Pilates");
     expect(getService("nope")).toBeUndefined();
