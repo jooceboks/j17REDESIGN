@@ -4,6 +4,7 @@ import Link from "next/link";
 import { BookingCTA, WaitlistCTA } from "@/components/CTA";
 import { HeroVideo } from "@/components/HeroVideo";
 import { Reveal } from "@/components/Reveal";
+import { StatusBand } from "@/components/StatusBand";
 import { Container, Section, SectionHeading } from "@/components/Section";
 import { asset, locations, siteConfig } from "@/config/site";
 import { classes, training } from "@/content/services";
@@ -138,66 +139,12 @@ export default function HomePage() {
         </Container>
       </section>
 
-      {/* ==================== VIDEO ==================== */}
-      <Section surface>
-        <Container>
-          <Reveal>
-            {/* TODO: replace with a dedicated poster frame from the final
-                video edit. The YouTube thumbnail for this video only exists
-                at 480x360, which is too soft to run full width. */}
-            <HeroVideo
-              videoId={siteConfig.youtubeHeroId}
-              poster={asset("img/location4.jpg")}
-              caption="Train. Recover. Feel the difference."
-            />
-          </Reveal>
-        </Container>
-      </Section>
 
-      {/* ==================== ABOUT ==================== */}
-      <Section>
-        <Container>
-          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-            <Reveal className="order-2 lg:order-1">
-              <p className="type-eyebrow mb-5">About Us</p>
-              <h2 className="type-h2">
-                A training, recovery and wellness club —{" "}
-                <span className="text-[var(--accent-lime)]">built on proof.</span>
-              </h2>
-              <div className="mt-8 space-y-5">
-                <p className="type-body">
-                  J17 Fitness is a training, recovery and wellness club serving
-                  the GTA. For years we&apos;ve coached this community out of
-                  Markham, Oakville and Mississauga. Now we&apos;re bringing the
-                  whole experience under one roof: our 10,000 sq ft Richmond Hill
-                  flagship, where coached classes, a full recovery zone and a
-                  healthy café sit side by side.
-                </p>
-                <p className="type-body">
-                  What hasn&apos;t changed is how we work. Every session is
-                  coached, every plan is built around you, and progress is
-                  measured — not guessed at — through the J17 Performance Index™.
-                </p>
-              </div>
-            </Reveal>
-
-            <Reveal className="order-1 lg:order-2" delay={100}>
-              <div className="relative aspect-[4/5] overflow-hidden">
-                <Image
-                  src={asset("img/15.jpg")}
-                  alt="Training at J17 Fitness"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover"
-                />
-              </div>
-            </Reveal>
-          </div>
-        </Container>
-      </Section>
+      <StatusBand />
 
       {/* ==================== WHY J17 ==================== */}
-      <Section surface>
+      {/* Base canvas: <StatusBand /> directly above is on surface. */}
+      <Section>
         <Container>
           <Reveal className="max-w-4xl">
             <p className="type-eyebrow mb-5">Why J17</p>
@@ -218,7 +165,7 @@ export default function HomePage() {
       </Section>
 
       {/* ==================== FOUR PILLARS ==================== */}
-      <Section>
+      <Section surface>
         <Container>
           <SectionHeading
             eyebrow="The J17 System"
@@ -240,6 +187,47 @@ export default function HomePage() {
                 </Link>
               </Reveal>
             ))}
+          </div>
+        </Container>
+      </Section>
+
+      {/* ==================== PERFORMANCE INDEX ==================== */}
+      <Section>
+        <Container>
+          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+            <Reveal>
+              <div className="relative aspect-[4/3] overflow-hidden">
+                <Image
+                  src={asset("img/measure.jpg")}
+                  alt="A coach reviewing Performance Index™ assessment results"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover"
+                />
+              </div>
+            </Reveal>
+
+            <Reveal delay={100}>
+              <p className="type-eyebrow mb-5">J17 Performance Index™</p>
+              <h2 className="type-h2">
+                You can{" "}
+                <span className="text-[var(--accent-lime)]">actually see it</span>
+              </h2>
+              <p className="type-body mt-8 text-lg">
+                The quiet thing no one else gives you: we benchmark where you
+                start, then retest on a regular schedule and show you exactly
+                what&apos;s changed. No hype — just a clear picture of your
+                progress, and a coach who can explain it.
+              </p>
+              <div className="mt-10 flex flex-wrap gap-4">
+                <Link href="/performance-index" className="btn-primary">
+                  How it works
+                </Link>
+                <BookingCTA variant="secondary">
+                  Book a Private Assessment
+                </BookingCTA>
+              </div>
+            </Reveal>
           </div>
         </Container>
       </Section>
@@ -318,49 +306,8 @@ export default function HomePage() {
         </Container>
       </Section>
 
-      {/* ==================== PERFORMANCE INDEX ==================== */}
-      <Section surface>
-        <Container>
-          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-            <Reveal>
-              <div className="relative aspect-[4/3] overflow-hidden">
-                <Image
-                  src={asset("img/measure.jpg")}
-                  alt="A coach reviewing Performance Index™ assessment results"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover"
-                />
-              </div>
-            </Reveal>
-
-            <Reveal delay={100}>
-              <p className="type-eyebrow mb-5">J17 Performance Index™</p>
-              <h2 className="type-h2">
-                You can{" "}
-                <span className="text-[var(--accent-lime)]">actually see it</span>
-              </h2>
-              <p className="type-body mt-8 text-lg">
-                The quiet thing no one else gives you: we benchmark where you
-                start, then retest on a regular schedule and show you exactly
-                what&apos;s changed. No hype — just a clear picture of your
-                progress, and a coach who can explain it.
-              </p>
-              <div className="mt-10 flex flex-wrap gap-4">
-                <Link href="/performance-index" className="btn-primary">
-                  How it works
-                </Link>
-                <BookingCTA variant="secondary">
-                  Book a Private Assessment
-                </BookingCTA>
-              </div>
-            </Reveal>
-          </div>
-        </Container>
-      </Section>
-
       {/* ============ RECOVERY / SPACE / COMMUNITY ============ */}
-      <Section>
+      <Section surface>
         <Container>
           <div className="grid gap-px bg-[var(--bg-elevated)] lg:grid-cols-3">
             {clubBlocks.map((block, i) => (
@@ -383,8 +330,66 @@ export default function HomePage() {
         </Container>
       </Section>
 
-      {/* ==================== LOCATIONS ==================== */}
+      {/* ==================== VIDEO ==================== */}
+      <Section>
+        <Container>
+          <Reveal>
+            {/* TODO: replace with a dedicated poster frame from the final
+                video edit. The YouTube thumbnail for this video only exists
+                at 480x360, which is too soft to run full width. */}
+            <HeroVideo
+              videoId={siteConfig.youtubeHeroId}
+              poster={asset("img/location4.jpg")}
+              caption="Train. Recover. Feel the difference."
+            />
+          </Reveal>
+        </Container>
+      </Section>
+
+      {/* ==================== ABOUT ==================== */}
       <Section surface>
+        <Container>
+          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+            <Reveal className="order-2 lg:order-1">
+              <p className="type-eyebrow mb-5">About Us</p>
+              <h2 className="type-h2">
+                A training, recovery and wellness club —{" "}
+                <span className="text-[var(--accent-lime)]">built on proof.</span>
+              </h2>
+              <div className="mt-8 space-y-5">
+                <p className="type-body">
+                  J17 Fitness is a training, recovery and wellness club serving
+                  the GTA. For years we&apos;ve coached this community out of
+                  Markham, Oakville and Mississauga. Now we&apos;re bringing the
+                  whole experience under one roof: our 10,000 sq ft Richmond Hill
+                  flagship, where coached classes, a full recovery zone and a
+                  healthy café sit side by side.
+                </p>
+                <p className="type-body">
+                  What hasn&apos;t changed is how we work. Every session is
+                  coached, every plan is built around you, and progress is
+                  measured — not guessed at — through the J17 Performance Index™.
+                </p>
+              </div>
+            </Reveal>
+
+            <Reveal className="order-1 lg:order-2" delay={100}>
+              <div className="relative aspect-[4/5] overflow-hidden">
+                <Image
+                  src={asset("img/15.jpg")}
+                  alt="Training at J17 Fitness"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover"
+                />
+              </div>
+            </Reveal>
+          </div>
+        </Container>
+      </Section>
+
+      {/* ==================== LOCATIONS ==================== */}
+      <Section>
         <Container>
           <SectionHeading
             eyebrow="Our Locations"
@@ -431,7 +436,7 @@ export default function HomePage() {
       </Section>
 
       {/* ============== FOUNDING MEMBERSHIPS ============== */}
-      <Section className="overflow-hidden border-t border-[var(--bg-elevated)]">
+      <Section surface className="overflow-hidden border-t border-[var(--bg-elevated)]">
         <span className="watermark top-1/2 -translate-y-1/2 text-[22vw] leading-none">
           J17
         </span>
