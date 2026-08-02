@@ -84,9 +84,16 @@ export const siteConfig = {
     "https://dp-prod.s3.us-east-2.amazonaws.com/img/tmp/j17performance.com/logo-2.png",
 } as const;
 
+const localAssetOverrides: Record<string, string> = {
+  "img/index/physique-overview.png": "/img/index/physique-overview.png",
+};
+
 /** Resolve an archive image path (e.g. "img/pilates-hero.jpg") to a full URL. */
 export function asset(path: string): string {
   const clean = path.replace(/^\/+/, "");
+  if (clean in localAssetOverrides) {
+    return localAssetOverrides[clean];
+  }
   return `${siteConfig.assetBase}/${clean}`;
 }
 

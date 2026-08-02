@@ -196,13 +196,13 @@ export default function HomePage() {
         <Container>
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <Reveal>
-              <div className="relative aspect-[4/3] overflow-hidden">
+              <div className="relative aspect-[4/3] bg-[var(--bg-base)] p-4 sm:p-6">
                 <Image
-                  src={asset("img/measure.jpg")}
+                  src={asset("img/index/physique-overview.png")}
                   alt="A coach reviewing Performance Index™ assessment results"
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover"
+                  className="object-contain"
                 />
               </div>
             </Reveal>
@@ -340,12 +340,8 @@ export default function HomePage() {
       <Section>
         <Container>
           <Reveal>
-            {/* TODO: replace with a dedicated poster frame from the final
-                video edit. The YouTube thumbnail for this video only exists
-                at 480x360, which is too soft to run full width. */}
             <HeroVideo
               videoId={siteConfig.youtubeHeroId}
-              poster={asset("img/location4.jpg")}
               caption="Train. Recover. Feel the difference."
             />
           </Reveal>

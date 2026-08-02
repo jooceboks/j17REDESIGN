@@ -141,9 +141,9 @@ export default function PerformanceIndexPage() {
 
           <div className="mt-16">
             <ReportFigure
-              src="/img/index/physique-overview.png"
+              src={asset("img/index/physique-overview.png")}
               width={1600}
-              height={998}
+                height={1269}
               alt="A Performance Index report panel titled General Situation of Physique. Two donut charts compare test-category proportions between a September 2025 assessment and a January 2026 reassessment. Excellent rises from 28.57 percent to 57.14 percent. Below, a table lists height, weight, BMI, sit and reach, single leg balance, broad jump, 30 second hurdle, 4 by 10 metre shuttle, push-ups and sit-ups for both dates, with the gain on each."
               caption="Sample report: how the category mix shifts between a benchmark and a retest"
             />
@@ -154,16 +154,14 @@ export default function PerformanceIndexPage() {
       {/* ---------------- What we measure ---------------- */}
       <Section>
         <Container>
-          <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
-            <div className="lg:col-span-5">
+          <div className="grid gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16 lg:items-start">
+            <div>
               <SectionHeading
                 eyebrow="The benchmark"
                 title="What we measure"
                 lead="Each assessment establishes a benchmark and identifies development priorities."
               />
-            </div>
-            <div className="lg:col-span-7">
-              <div className="grid gap-px bg-[var(--bg-elevated)] sm:grid-cols-2">
+              <div className="mt-10 grid gap-px bg-[var(--bg-elevated)] sm:grid-cols-2">
                 {whatWeMeasure.map((item, i) => (
                   <Reveal key={item} delay={i * 100}>
                     <div className="flex h-full items-center gap-4 bg-[var(--bg-surface)] p-6">
@@ -181,17 +179,17 @@ export default function PerformanceIndexPage() {
                 ))}
               </div>
             </div>
-          </div>
 
-          <div className="mt-16 flex justify-center">
-            <ReportFigure
-              src="/img/index/competency-radar.png"
-              width={1470}
-              height={1600}
-              maxWidth={760}
-              alt="A Performance Index competency radar chart plotting eight axes: BMI, flexibility, lower strength, balance, core strength, upper strength, agility and coordination. A lime outline shows the individual's competency distribution and a cyan outline shows the peer average, so strengths and gaps against peers are visible at a glance."
-              caption="Sample report: your competency profile plotted against your peer group"
-            />
+            <div>
+              <ReportFigure
+                src="/img/index/competency-radar.png"
+                width={1470}
+                height={1600}
+                maxWidth={760}
+                alt="A Performance Index competency radar chart plotting eight axes: BMI, flexibility, lower strength, balance, core strength, upper strength, agility and coordination. A lime outline shows the individual's competency distribution and a cyan outline shows the peer average, so strengths and gaps against peers are visible at a glance."
+                caption="Sample report: your competency profile plotted against your peer group"
+              />
+            </div>
           </div>
         </Container>
       </Section>
@@ -235,7 +233,7 @@ export default function PerformanceIndexPage() {
           />
           <div className="mt-14">
             <ReportFigure
-              src="/img/index/scorecard.png"
+              src="/img/index/growth-metrics.png"
               width={2296}
               height={1824}
               alt="A Performance Index scorecard. A legend defines four bands: Needs Effort, Fair, Good and Excellent. Below it, one row per test shows the trainee's score bar, the average score bar, and the standard breakpoints between bands. Rows shown are sit and reach for flexibility, single leg balance, broad jump for lower strength, and the step test for coordination."

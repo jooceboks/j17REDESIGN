@@ -17,8 +17,10 @@ export type NavItem = NavLink & {
 };
 
 export const mainNav: NavItem[] = [
-  // "Home" is deliberately absent: the logo links there, which is the
-  // established convention and buys back horizontal room in a crowded bar.
+  {
+    label: "Home",
+    href: "/",
+  },
   {
     label: "Classes",
     href: "/classes",

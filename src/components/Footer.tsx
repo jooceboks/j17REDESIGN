@@ -3,6 +3,20 @@ import Image from "next/image";
 import { footerNav } from "@/content/nav";
 import { offices, siteConfig } from "@/config/site";
 
+function getMapsLink(location: {
+  street: string;
+  region: string;
+  mapQuery?: string;
+  coords?: { lat: number; lng: number };
+}) {
+  if (location.coords) {
+    return `https://www.google.com/maps/search/?api=1&query=${location.coords.lat},${location.coords.lng}`;
+  }
+
+  const query = location.mapQuery ?? `${location.street}, ${location.region}`;
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+}
+
 /**
  * The one and only site footer.
  *
@@ -15,9 +29,9 @@ export function Footer() {
   return (
     <footer className="relative overflow-hidden border-t border-[var(--bg-elevated)] bg-[var(--bg-base)]">
       <div className="mx-auto w-full max-w-7xl px-5 py-16 sm:px-8 sm:py-20">
-        <div className="grid gap-12 lg:grid-cols-[1.5fr_2fr]">
+        <div className="grid gap-10 lg:grid-cols-[1.2fr_1.1fr] lg:items-start">
           {/* Brand + blurb */}
-          <div className="max-w-md">
+          <div className="max-w-xl">
             <Image
               src={siteConfig.logoUrl}
               alt={siteConfig.name}
@@ -27,31 +41,39 @@ export function Footer() {
             />
             <p className="type-body mt-6 text-sm">{siteConfig.footerBlurb}</p>
 
-            <div className="mt-8 flex items-center gap-4">
-              <a
-                href={siteConfig.social.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="J17 Fitness on Instagram"
-                className="flex h-11 w-11 items-center justify-center border border-[var(--bg-elevated)] text-[var(--text-secondary)] transition-colors duration-150 hover:border-[var(--accent-lime)] hover:text-[var(--accent-lime)]"
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                  className="h-5 w-5 fill-current"
+            <div className="mt-8 space-y-3">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--accent-lime)]">
+                Subscribe to Our News
+              </p>
+              <div className="flex flex-wrap items-center gap-3">
+                <a
+                  href={siteConfig.social.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="J17 Fitness on Instagram"
+                  className="flex h-11 w-11 items-center justify-center border border-[var(--accent-lime)]/40 bg-[var(--bg-surface)] text-[var(--accent-lime)] shadow-[0_0_0_1px_rgba(215,251,0,0.15),0_0_24px_rgba(215,251,0,0.12)] transition-all duration-150 hover:-translate-y-0.5 hover:bg-[var(--accent-lime)] hover:text-[var(--bg-base)]"
                 >
-                  <path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.8 3.8 0 0 1-1.38-.9 3.8 3.8 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16Zm0 2.16c-3.14 0-3.51.01-4.75.07-1.15.05-1.77.24-2.18.4-.55.21-.94.47-1.35.88-.41.41-.67.8-.88 1.35-.16.41-.35 1.03-.4 2.18-.06 1.24-.07 1.61-.07 4.75s.01 3.51.07 4.75c.05 1.15.24 1.77.4 2.18.21.55.47.94.88 1.35.41.41.8.67 1.35.88.41.16 1.03.35 2.18.4 1.24.06 1.61.07 4.75.07s3.51-.01 4.75-.07c1.15-.05 1.77-.24 2.18-.4.55-.21.94-.47 1.35-.88.41-.41.67-.8.88-1.35.16-.41.35-1.03.4-2.18.06-1.24.07-1.61.07-4.75s-.01-3.51-.07-4.75c-.05-1.15-.24-1.77-.4-2.18a3.6 3.6 0 0 0-.88-1.35 3.6 3.6 0 0 0-1.35-.88c-.41-.16-1.03-.35-2.18-.4-1.24-.06-1.61-.07-4.75-.07Zm0 3.67a5.01 5.01 0 1 1 0 10.02 5.01 5.01 0 0 1 0-10.02Zm0 8.26a3.25 3.25 0 1 0 0-6.5 3.25 3.25 0 0 0 0 6.5Zm6.38-8.46a1.17 1.17 0 1 1-2.34 0 1.17 1.17 0 0 1 2.34 0Z" />
-                </svg>
-              </a>
-              <a
-                href={siteConfig.social.xiaohongshu}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="J17 Fitness on Xiaohongshu (RED)"
-                className="flex h-11 items-center justify-center border border-[var(--bg-elevated)] px-4 text-[11px] font-bold uppercase tracking-[0.1em] text-[var(--text-secondary)] transition-colors duration-150 hover:border-[var(--accent-lime)] hover:text-[var(--accent-lime)]"
-              >
-                小红书
-              </a>
+                  <svg
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                    className="h-5 w-5 fill-current"
+                  >
+                    <path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.8 3.8 0 0 1-1.38-.9 3.8 3.8 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16Zm0 2.16c-3.14 0-3.51.01-4.75.07-1.15.05-1.77.24-2.18.4-.55.21-.94.47-1.35.88-.41.41-.67.8-.88 1.35-.16.41-.35 1.03-.4 2.18-.06 1.24-.07 1.61-.07 4.75s.01 3.51.07 4.75c.05 1.15.24 1.77.4 2.18.21.55.47.94.88 1.35.41.41.8.67 1.35.88.41.16 1.03.35 2.18.4 1.24.06 1.61.07 4.75.07s3.51-.01 4.75-.07c1.15-.05 1.77-.24 2.18-.4.55-.21.94-.47 1.35-.88.41-.41.67-.8.88-1.35.16-.41.35-1.03.4-2.18.06-1.24.07-1.61.07-4.75s-.01-3.51-.07-4.75c-.05-1.15-.24-1.77-.4-2.18a3.6 3.6 0 0 0-.88-1.35 3.6 3.6 0 0 0-1.35-.88c-.41-.16-1.03-.35-2.18-.4-1.24-.06-1.61-.07-4.75-.07Zm0 3.67a5.01 5.01 0 1 1 0 10.02 5.01 5.01 0 0 1 0-10.02Zm0 8.26a3.25 3.25 0 1 0 0-6.5 3.25 3.25 0 0 0 0 6.5Zm6.38-8.46a1.17 1.17 0 1 1-2.34 0 1.17 1.17 0 0 1 2.34 0Z" />
+                  </svg>
+                </a>
+                <a
+                  href={siteConfig.social.xiaohongshu}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="J17 Fitness on Xiaohongshu (RED)"
+                  className="flex h-11 items-center justify-center border border-[var(--accent-lime)]/40 bg-[var(--bg-surface)] px-4 text-[11px] font-bold uppercase tracking-[0.1em] text-[var(--text-primary)] shadow-[0_0_0_1px_rgba(215,251,0,0.15),0_0_24px_rgba(215,251,0,0.12)] transition-all duration-150 hover:-translate-y-0.5 hover:bg-[var(--accent-lime)] hover:text-[var(--bg-base)]"
+                >
+                  小红书
+                </a>
+              </div>
+              <p className="text-sm text-[var(--text-secondary)]">
+                Stay in touch with new classes, events, and openings.
+              </p>
             </div>
           </div>
 
@@ -80,9 +102,15 @@ export function Footer() {
         </div>
 
         {/* Offices */}
-        <div className="mt-16 grid gap-8 border-t border-[var(--bg-elevated)] pt-10 sm:grid-cols-3">
+        <div className="mt-12 grid gap-4 border-t border-[var(--bg-elevated)] pt-10 sm:grid-cols-3">
           {offices.map((office) => (
-            <div key={office.slug}>
+            <a
+              key={office.slug}
+              href={getMapsLink(office)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group rounded border border-[var(--bg-elevated)] bg-[var(--bg-surface)]/60 p-5 transition-colors duration-150 hover:border-[var(--accent-lime)] hover:bg-[var(--bg-surface)]"
+            >
               <h2 className="mb-3 text-[11px] font-bold uppercase tracking-[0.15em] text-[var(--text-primary)]">
                 {office.slug === "markham" ? "Main Office" : `${office.city} Office`}
               </h2>
@@ -94,28 +122,28 @@ export function Footer() {
                 {office.phone && (
                   <>
                     <br />
-                    <a
-                      href={`tel:${office.phone.replace(/[^+\d]/g, "")}`}
-                      className="transition-colors duration-150 hover:text-[var(--accent-lime)]"
-                    >
+                    <span className="mt-2 inline-block text-[var(--text-primary)] transition-colors duration-150 group-hover:text-[var(--accent-lime)]">
                       {office.phone}
-                    </a>
+                    </span>
                   </>
                 )}
               </address>
-            </div>
+              <span className="mt-4 inline-flex items-center text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--accent-lime)]">
+                Open in Google Maps ↗
+              </span>
+            </a>
           ))}
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-12 flex flex-col gap-4 border-t border-[var(--bg-elevated)] pt-8 text-sm text-[var(--text-secondary)] sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-10 flex flex-col gap-4 border-t border-[var(--bg-elevated)] pt-8 text-sm text-[var(--text-secondary)] sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {year} {siteConfig.legalName}. All rights reserved.
           </p>
           <p className="flex flex-wrap items-center gap-x-6 gap-y-2">
             <a
-              href={`mailto:${siteConfig.email}`}
-              className="transition-colors duration-150 hover:text-[var(--accent-lime)]"
+              href={`mailto:${siteConfig.email}?subject=Hello%20J17%20Fitness`}
+              className="font-semibold text-[var(--accent-lime)] underline decoration-[var(--accent-lime)]/70 underline-offset-4 transition-colors duration-150 hover:opacity-80"
             >
               {siteConfig.email}
             </a>

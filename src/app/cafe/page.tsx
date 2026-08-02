@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { WaitlistCTA } from "@/components/CTA";
 import { ComingSoon } from "@/components/ComingSoon";
 import { Reveal } from "@/components/Reveal";
@@ -44,23 +43,16 @@ export default function CafePage() {
   return (
     <>
       {/* ---------------- Hero ---------------- */}
-      <section className="relative flex min-h-[60vh] items-end overflow-hidden pt-20 sm:min-h-[70vh]">
-        {/* TODO: replace with real café photography once the space is built. */}
-        <Image
-          src={asset("img/15.jpg")}
-          alt=""
-          aria-hidden="true"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
-        />
-        <div className="img-scrim absolute inset-0" aria-hidden="true" />
-
-        <Container className="relative z-10 pb-16 sm:pb-24">
+      <section className="border-b border-[var(--bg-elevated)] bg-[var(--bg-surface)] py-24 sm:py-32">
+        <Container>
           <Reveal>
             <p className="type-eyebrow mb-5">Fuel</p>
             <h1 className="type-h1 max-w-4xl">The Café</h1>
+            <p className="type-body mt-8 max-w-3xl text-lg">
+              The café opens with the club. We’re building it to feel like part
+              of the experience from day one — healthy, performance-focused food
+              in the same space as training and recovery.
+            </p>
           </Reveal>
         </Container>
       </section>

@@ -84,8 +84,8 @@ export default function ContactPage() {
                 <h2 className="type-h3">Email</h2>
                 <p className="mt-5">
                   <a
-                    href={`mailto:${siteConfig.email}`}
-                    className="type-body transition-colors duration-150 hover:text-[var(--accent-lime)]"
+                    href={`mailto:${siteConfig.email}?subject=Hello%20J17%20Fitness`}
+                    className="type-body font-semibold text-[var(--accent-lime)] underline decoration-[var(--accent-lime)]/70 underline-offset-4 transition-colors duration-150 hover:opacity-80"
                   >
                     {siteConfig.email}
                   </a>

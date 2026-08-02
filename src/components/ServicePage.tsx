@@ -6,7 +6,7 @@ import { BookingCTA, WaitlistCTA } from "./CTA";
 import { IndexProof } from "./IndexProof";
 import { MoreServices } from "./MoreServices";
 import { Reveal } from "./Reveal";
-import { CheckList, Container, Section, SectionHeading } from "./Section";
+import { Container, Section, SectionHeading } from "./Section";
 
 /**
  * The template behind all eight service pages (5 classes + 3 training
@@ -150,24 +150,22 @@ export function ServicePage({ service }: { service: Service }) {
         <IndexProof metric={service.indexMetric} surface={nextBand()} />
       )}
 
-      {/* ---------------- Founding checklist + serving ---------------- */}
+      {/* ---------------- At a glance ---------------- */}
       <Section surface={nextBand()}>
         <Container>
-          <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
-            <div className="lg:col-span-5">
-              <SectionHeading
-                eyebrow="Founding memberships"
-                title="What you get"
-              />
-            </div>
-            <div className="lg:col-span-7">
-              <CheckList items={service.checklist} />
-
-              <Reveal delay={400}>
-                <p className="type-eyebrow mt-12 border-l-4 border-[var(--accent-lime)] pl-5">
-                  Serving: {service.serving}
+          <div className="rounded border border-[var(--bg-elevated)] bg-[var(--bg-surface)] p-8 sm:p-10">
+            <p className="type-eyebrow">At a glance</p>
+            <div className="mt-6 grid gap-8 md:grid-cols-2">
+              <div>
+                <h3 className="type-h3">Built for</h3>
+                <p className="type-body mt-3">
+                  {service.builds ?? service.name}
                 </p>
-              </Reveal>
+              </div>
+              <div>
+                <h3 className="type-h3">Serving</h3>
+                <p className="type-body mt-3">{service.serving}</p>
+              </div>
             </div>
           </div>
         </Container>
@@ -184,11 +182,10 @@ export function ServicePage({ service }: { service: Service }) {
         <Container>
           <Reveal className="max-w-3xl">
             <h2 className="type-h2">
-              Be first through <span className="text-[var(--accent-lime)]">the doors</span>
+              Ready to see it for yourself?
             </h2>
             <p className="type-body mt-6 text-lg">
-              Founding memberships are opening now. Join the waitlist and we&apos;ll
-              reach out with founding-member rates and details before anyone else.
+              If this feels like the right fit, we&apos;ll help you take the next step.
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <WaitlistCTA variant="primary" />
