@@ -324,7 +324,7 @@ export default function HomePage() {
                   <p className="type-body mt-4 flex-1">{block.body}</p>
                   <Link
                     href={block.href}
-                    className="mt-8 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.12em] text-[var(--accent-lime)] transition-opacity duration-150 hover:opacity-70"
+                    className="mt-8 inline-flex min-h-6 items-center gap-2 text-xs font-bold uppercase tracking-[0.12em] text-[var(--accent-lime)] transition-opacity duration-150 hover:opacity-70"
                   >
                     {block.cta}
                     <span aria-hidden="true">→</span>
@@ -418,7 +418,7 @@ export default function HomePage() {
                       aria-hidden="true"
                     />
                     {location.status === "flagship" && (
-                      <span className="absolute left-0 top-5 bg-[var(--accent-lime)] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--bg-base)]">
+                      <span className="absolute left-0 top-5 bg-[var(--accent-lime)] px-3 py-1.5 type-label text-[var(--bg-base)]">
                         Opening soon
                       </span>
                     )}

@@ -72,7 +72,7 @@ export default function LocationsPage() {
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover"
                 />
-                <span className="absolute left-0 top-6 bg-[var(--accent-lime)] px-4 py-2 text-[11px] font-bold uppercase tracking-[0.12em] text-[var(--bg-base)]">
+                <span className="absolute left-0 top-6 bg-[var(--accent-lime)] px-4 py-2 type-label text-[var(--bg-base)]">
                   {flagship.statusLabel}
                 </span>
               </div>

@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",
-    "check:contrast": "node scripts/check-contrast.mjs"
+    "check:contrast": "node scripts/check-contrast.mjs",
+    "check:mobile": "node scripts/check-mobile.mjs"
   },
   "dependencies": {
     "next": "16.2.12",

@@ -77,7 +77,7 @@ export function Header() {
       <div className="mx-auto flex h-20 w-full max-w-7xl items-center justify-between gap-6 px-5 sm:px-8">
         <Link
           href="/"
-          className="relative z-10 shrink-0"
+          className="relative z-10 -ml-1.5 flex min-h-11 min-w-11 shrink-0 items-center px-1.5"
           aria-label={`${siteConfig.name} home`}
         >
           <Image
@@ -129,14 +129,14 @@ export function Header() {
         <div className="flex items-center gap-3">
           <Link
             href={siteConfig.joinNowUrl}
-            className="btn-primary hidden !px-6 !py-3 !text-xs sm:inline-flex"
+            className="btn-primary hidden min-h-11 !px-6 !py-3 !text-xs sm:inline-flex"
           >
             Join Now
           </Link>
 
           <button
             type="button"
-            className="relative z-10 flex h-10 w-10 items-center justify-center lg:hidden"
+            className="relative z-10 -mr-1 flex h-11 w-11 items-center justify-center lg:hidden"
             aria-expanded={mobileOpen}
             aria-controls="mobile-menu"
             aria-label={mobileOpen ? "Close menu" : "Open menu"}

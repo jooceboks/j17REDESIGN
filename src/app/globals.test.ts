@@ -1,8 +1,16 @@
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
 const css = readFileSync(join(process.cwd(), "src/app/globals.css"), "utf8");
+
+/** Recursively list files under a directory. */
+function walk(dir: string): string[] {
+  return readdirSync(dir, { withFileTypes: true }).flatMap((e) => {
+    const full = join(dir, e.name);
+    return e.isDirectory() ? walk(full) : [full];
+  });
+}
 
 /**
  * Guards a Tailwind v4 footgun that already shipped a black-on-black bug once.
@@ -44,6 +52,28 @@ describe("design tokens", () => {
     expect(colourTokens.length).toBeGreaterThan(0);
     const collisions = colourTokens.filter((t) => FONT_SIZE_NAMES.includes(t));
     expect(collisions).toEqual([]);
+  });
+});
+
+describe("JSX string attributes", () => {
+  it("contains no literal unicode escapes", () => {
+    // JSX string attributes are NOT JS string literals — they do not process
+    // escape sequences. `body="café"` renders the backslash verbatim on
+    // the page. This shipped once on /cafe. It only works inside expression
+    // containers like points={["café"]}, which are real JS.
+    const files = walk(join(process.cwd(), "src")).filter((f) =>
+      f.endsWith(".tsx"),
+    );
+    expect(files.length).toBeGreaterThan(10);
+
+    const offenders: string[] = [];
+    for (const f of files) {
+      const src = readFileSync(f, "utf8");
+      for (const m of src.matchAll(/\w+="[^"]*\\u[0-9a-fA-F]{4}[^"]*"/g)) {
+        offenders.push(`${f.replace(process.cwd() + "/", "")}: ${m[0].slice(0, 60)}`);
+      }
+    }
+    expect(offenders).toEqual([]);
   });
 });
 

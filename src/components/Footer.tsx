@@ -42,7 +42,7 @@ export function Footer() {
             <p className="type-body mt-6 text-sm">{siteConfig.footerBlurb}</p>
 
             <div className="mt-8 space-y-3">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--accent-lime)]">
+              <p className="type-label text-[var(--accent-lime)]">
                 Subscribe to Our News
               </p>
               <div className="flex flex-wrap items-center gap-3">
@@ -66,7 +66,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="J17 Fitness on Xiaohongshu (RED)"
-                  className="flex h-11 items-center justify-center border border-[var(--accent-lime)]/40 bg-[var(--bg-surface)] px-4 text-[11px] font-bold uppercase tracking-[0.1em] text-[var(--text-primary)] shadow-[0_0_0_1px_rgba(215,251,0,0.15),0_0_24px_rgba(215,251,0,0.12)] transition-all duration-150 hover:-translate-y-0.5 hover:bg-[var(--accent-lime)] hover:text-[var(--bg-base)]"
+                  className="flex h-11 items-center justify-center border border-[var(--accent-lime)]/40 bg-[var(--bg-surface)] px-4 type-label text-[var(--text-primary)] shadow-[0_0_0_1px_rgba(215,251,0,0.15),0_0_24px_rgba(215,251,0,0.12)] transition-all duration-150 hover:-translate-y-0.5 hover:bg-[var(--accent-lime)] hover:text-[var(--bg-base)]"
                 >
                   小红书
                 </a>
@@ -81,7 +81,7 @@ export function Footer() {
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
             {footerNav.map((col) => (
               <nav key={col.heading} aria-label={col.heading}>
-                <h2 className="mb-5 text-[11px] font-bold uppercase tracking-[0.15em] text-[var(--accent-lime)]">
+                <h2 className="mb-5 type-label text-[var(--accent-lime)]">
                   {col.heading}
                 </h2>
                 <ul className="space-y-3">
@@ -89,7 +89,7 @@ export function Footer() {
                     <li key={link.href}>
                       <Link
                         href={link.href}
-                        className="text-sm text-[var(--text-secondary)] transition-colors duration-150 hover:text-[var(--text-primary)]"
+                        className="inline-flex min-h-11 items-center text-sm text-[var(--text-secondary)] transition-colors duration-150 hover:text-[var(--text-primary)] sm:min-h-0 sm:py-1"
                       >
                         {link.label}
                       </Link>
@@ -111,7 +111,7 @@ export function Footer() {
               rel="noopener noreferrer"
               className="group rounded border border-[var(--bg-elevated)] bg-[var(--bg-surface)]/60 p-5 transition-colors duration-150 hover:border-[var(--accent-lime)] hover:bg-[var(--bg-surface)]"
             >
-              <h2 className="mb-3 text-[11px] font-bold uppercase tracking-[0.15em] text-[var(--text-primary)]">
+              <h2 className="mb-3 type-label text-[var(--text-primary)]">
                 {office.slug === "markham" ? "Main Office" : `${office.city} Office`}
               </h2>
               <address className="text-sm not-italic leading-relaxed text-[var(--text-secondary)]">
@@ -128,7 +128,7 @@ export function Footer() {
                   </>
                 )}
               </address>
-              <span className="mt-4 inline-flex items-center text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--accent-lime)]">
+              <span className="mt-4 inline-flex items-center type-label text-[var(--accent-lime)]">
                 Open in Google Maps ↗
               </span>
             </a>
@@ -143,7 +143,7 @@ export function Footer() {
           <p className="flex flex-wrap items-center gap-x-6 gap-y-2">
             <a
               href={`mailto:${siteConfig.email}?subject=Hello%20J17%20Fitness`}
-              className="font-semibold text-[var(--accent-lime)] underline decoration-[var(--accent-lime)]/70 underline-offset-4 transition-colors duration-150 hover:opacity-80"
+              className="inline-flex min-h-11 items-center font-semibold text-[var(--accent-lime)] underline decoration-[var(--accent-lime)]/70 underline-offset-4 transition-colors duration-150 hover:opacity-80 sm:min-h-0"
             >
               {siteConfig.email}
             </a>

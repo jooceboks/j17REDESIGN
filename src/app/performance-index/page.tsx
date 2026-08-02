@@ -231,15 +231,6 @@ export default function PerformanceIndexPage() {
             title="A score per test, against the standard"
             lead="Every test is scored, banded from Needs Effort to Excellent, and placed against the published standard for your age and the average for your peer group."
           />
-          <div className="mt-14">
-            <ReportFigure
-              src="/img/index/growth-metrics.png"
-              width={2296}
-              height={1824}
-              alt="A Performance Index scorecard. A legend defines four bands: Needs Effort, Fair, Good and Excellent. Below it, one row per test shows the trainee's score bar, the average score bar, and the standard breakpoints between bands. Rows shown are sit and reach for flexibility, single leg balance, broad jump for lower strength, and the step test for coordination."
-              caption="Sample report: each test banded against the published standard for your age"
-            />
-          </div>
         </Container>
       </Section>
 

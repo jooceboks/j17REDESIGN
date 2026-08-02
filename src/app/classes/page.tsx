@@ -113,7 +113,7 @@ export default function ClassesHubPage() {
                       <th
                         key={heading}
                         scope="col"
-                        className="px-4 py-4 text-[11px] font-bold uppercase tracking-[0.15em] text-[var(--accent-lime)]"
+                        className="px-4 py-4 type-label text-[var(--accent-lime)]"
                       >
                         {heading}
                       </th>
@@ -129,7 +129,7 @@ export default function ClassesHubPage() {
                       <th scope="row" className="px-4 py-5 align-top">
                         <Link
                           href={service.href}
-                          className="font-display text-base tracking-[0.04em] text-[var(--text-primary)] transition-colors duration-150 hover:text-[var(--accent-lime)]"
+                          className="inline-flex min-h-6 items-center font-display text-base tracking-[0.04em] text-[var(--text-primary)] transition-colors duration-150 hover:text-[var(--accent-lime)]"
                         >
                           {service.name}
                         </Link>

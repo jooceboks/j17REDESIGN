@@ -106,7 +106,7 @@ export default function CafePage() {
       <ComingSoon
         eyebrow="What to expect"
         headline="The menu is still being built"
-        body="The caf\u00e9 opens with the club. We are not going to guess at a menu before it exists."
+        body="The café opens with the club. We are not going to guess at a menu before it exists."
         points={[
           "On-site at the Richmond Hill flagship",
           "Healthy, performance-focused meals",

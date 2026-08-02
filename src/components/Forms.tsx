@@ -9,7 +9,7 @@ const fieldClass =
   "w-full border border-[var(--bg-elevated)] bg-[var(--bg-elevated)] px-4 py-3.5 text-[var(--text-primary)] placeholder:text-[var(--text-secondary)] transition-colors duration-150 focus:border-[var(--accent-lime)] focus:outline-none";
 
 const labelClass =
-  "mb-2 block text-[11px] font-bold uppercase tracking-[0.15em] text-[var(--text-secondary)]";
+  "mb-2 block type-label text-[var(--text-secondary)]";
 
 function useFormSubmit(kind: FormKind) {
   const [status, setStatus] = useState<Status>("idle");

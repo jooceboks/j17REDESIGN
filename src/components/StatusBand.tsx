@@ -41,7 +41,7 @@ export function StatusBand() {
 
         <Link
           href="/locations"
-          className="shrink-0 text-xs font-bold uppercase tracking-[0.12em] text-[var(--text-primary)] underline underline-offset-4 transition-colors duration-150 hover:text-[var(--accent-lime)]"
+          className="inline-flex min-h-6 shrink-0 items-center text-xs font-bold uppercase tracking-[0.12em] text-[var(--text-primary)] underline underline-offset-4 transition-colors duration-150 hover:text-[var(--accent-lime)]"
         >
           See all locations
         </Link>
