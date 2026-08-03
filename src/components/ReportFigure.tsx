@@ -4,9 +4,14 @@ import { Reveal } from "./Reveal";
 /**
  * Displays a Performance Index™ report panel.
  *
- * These are dense infographics with real type in them, so they are rendered
- * `object-contain` at generous width rather than cropped to fit a layout box.
- * Cropping them would cut off axis labels and score bars.
+ * The panel always fits the width it is given — it scales down on small
+ * screens rather than panning inside a horizontal scroller. That keeps the
+ * layout static and predictable on mobile.
+ *
+ * Trade-off, stated plainly: these are dense infographics, so at phone widths
+ * the type inside them is small. The alternative (a fixed-width scroller) was
+ * legible but introduced horizontal-overflow bugs and an awkward swipe
+ * interaction, so fitting won.
  *
  * Assets are local (`/public/img/index/`) rather than on the client's S3
  * bucket, because they were supplied directly and are already on-brand: dark
@@ -37,49 +42,35 @@ export function ReportFigure({
   maxWidth?: number;
 }) {
   return (
-    // The Reveal wrapper is the actual flex/grid item on the pages that use
-    // this, so min-w-0 has to live here too — not just on the <figure>.
+    // min-w-0 on both the Reveal wrapper and the figure: whichever of them is
+    // the flex or grid item on a given page would otherwise default to
+    // min-width:auto and refuse to shrink, overflowing the page.
     <Reveal className="w-full min-w-0">
-      {/* min-w-0 matters: as a flex item this would otherwise default to
-          min-width:auto and refuse to shrink below the panel's intrinsic
-          width, pushing the whole page into horizontal scroll on mobile. */}
       <figure
         className="m-0 w-full min-w-0"
         style={maxWidth ? { maxWidth } : undefined}
       >
-        {/*
-          These panels carry real type at small sizes. Squeezed into a 375px
-          phone they become unreadable, so below `sm` the panel keeps a
-          legible minimum width and pans inside its own scroll container.
-          The page body never scrolls sideways as a result.
-        */}
-        <div className="overflow-x-auto border border-[var(--bg-elevated)] bg-[var(--bg-base)]">
-          <div className="min-w-[42rem] sm:min-w-0">
-            <Image
-              src={src}
-              alt={alt}
-              width={width}
-              height={height}
-              priority={priority}
-              /*
-               * Must describe the width the image ACTUALLY renders at, not
-               * the viewport. Below sm the panel is pinned to 42rem (672px)
-               * inside its scroller, so claiming 100vw made next/image serve
-               * a 390px source and upscale it 1.72x — visibly blurry on a
-               * phone. 704px covers 672 plus the border.
-               */
-              sizes={
-                maxWidth
-                  ? `(max-width: 639px) 704px, (max-width: ${maxWidth}px) 100vw, ${maxWidth}px`
-                  : "(max-width: 639px) 704px, (max-width: 1280px) 100vw, 1280px"
-              }
-              className="h-auto w-full"
-            />
-          </div>
+        <div className="border border-[var(--bg-elevated)] bg-[var(--bg-base)]">
+          <Image
+            src={src}
+            alt={alt}
+            width={width}
+            height={height}
+            priority={priority}
+            /*
+             * The panel now fills whatever width its container has, so the
+             * viewport-relative hints are accurate. Getting this wrong makes
+             * next/image serve a file too small and the browser upscale it —
+             * `npm run check:mobile` fails on that.
+             */
+            sizes={
+              maxWidth
+                ? `(max-width: ${maxWidth}px) 100vw, ${maxWidth}px`
+                : "(max-width: 1280px) 100vw, 1280px"
+            }
+            className="h-auto w-full"
+          />
         </div>
-        <p className="mt-3 text-xs text-[var(--text-secondary)] sm:hidden">
-          Swipe the panel to see all of it
-        </p>
         <figcaption className="type-eyebrow mt-5 border-l-4 border-[var(--accent-lime)] pl-5">
           {caption}
         </figcaption>

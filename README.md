@@ -59,7 +59,8 @@ It drives iPhone SE (375px) and iPhone 14 (390px) across 14 routes and fails on:
   scroller, so a 390px file was being stretched 1.72x
 
 Content that pans inside its own `overflow-x` container is exempt — that is
-deliberate for the Index report panels and the classes comparison table.
+deliberate for the classes comparison table. The Index report panels no longer
+pan; they scale down to fit the viewport.
 
 > **If it reports failures on every element at once**, the stylesheet did not
 > load — the script aborts and tells you so. The usual cause is a stale
