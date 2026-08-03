@@ -139,7 +139,7 @@ export default function PerformanceIndexPage() {
             </Reveal>
           </div>
 
-          <div className="mt-16">
+          <div className="mt-16 min-w-0">
             <ReportFigure
               src={asset("img/index/physique-overview.png")}
               width={1600}
@@ -180,7 +180,10 @@ export default function PerformanceIndexPage() {
               </div>
             </div>
 
-            <div>
+            {/* min-w-0: grid items default to min-width:auto and would
+                otherwise refuse to shrink below the panel's intrinsic width,
+                pushing the whole page into horizontal scroll. */}
+            <div className="min-w-0">
               <ReportFigure
                 src="/img/index/competency-radar.png"
                 width={1470}
@@ -197,7 +200,7 @@ export default function PerformanceIndexPage() {
       {/* ---------------- Reassessment ---------------- */}
       <Section surface>
         <Container>
-          <div className="grid items-start gap-12 lg:grid-cols-2 lg:gap-16">
+          <div className="grid min-w-0 items-start gap-12 lg:grid-cols-2 lg:gap-16">
             <ReportFigure
               src="/img/index/growth-metrics.png"
               width={1600}

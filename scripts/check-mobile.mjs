@@ -11,6 +11,9 @@
  *      Primary controls (buttons, the hamburger, the logo) are separately
  *      held to 44 tall below.
  *   3. Body text below 12px, which is unreadable on a phone.
+ *   5. Images upscaled beyond their source resolution, which is how a wrong
+ *      `sizes` attribute shows up: next/image serves a small file and the
+ *      browser stretches it. Invisible to every other check.
  *   4. Content wider than the viewport, naming the offending element.
  *
  * Wide panels that pan inside their own `overflow-x` container are fine and
@@ -51,8 +54,9 @@ const DEVICES = [
 const MIN_TAP = 24;   // WCAG 2.5.8 AA
 const MIN_PRIMARY = 44; // buttons and header controls, Apple HIG
 const MIN_FONT = 12;
+const MAX_UPSCALE = 1.15; // allow a little slack for rounding and DPR
 
-function auditMobile({ minTap, minPrimary, minFont }) {
+function auditMobile({ minTap, minPrimary, minFont, maxUpscale }) {
   const vw = window.innerWidth;
   const issues = [];
 
@@ -142,6 +146,23 @@ function auditMobile({ minTap, minPrimary, minFont }) {
     }
   }
 
+  // 5. Upscaled images. A `sizes` attribute that understates the rendered
+  // width makes next/image serve a file too small, and the browser stretches
+  // it. The page still "works", so nothing else catches it.
+  for (const img of document.querySelectorAll("img")) {
+    if (!img.complete || img.naturalWidth === 0) continue;
+    const r = img.getBoundingClientRect();
+    if (r.width === 0) continue;
+    const ratio = r.width / img.naturalWidth;
+    if (ratio > maxUpscale) {
+      issues.push({
+        type: "upscale",
+        el: `${(img.currentSrc || img.src).split("/").pop()?.slice(0, 45)}`,
+        size: `${Math.round(r.width)}px from a ${img.naturalWidth}px source (${ratio.toFixed(2)}x)`,
+      });
+    }
+  }
+
   return issues;
 }
 
@@ -185,6 +206,7 @@ for (const device of DEVICES) {
       minTap: MIN_TAP,
       minPrimary: MIN_PRIMARY,
       minFont: MIN_FONT,
+      maxUpscale: MAX_UPSCALE,
     });
     total += issues.length;
 

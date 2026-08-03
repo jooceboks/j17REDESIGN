@@ -61,10 +61,17 @@ export function ReportFigure({
               width={width}
               height={height}
               priority={priority}
+              /*
+               * Must describe the width the image ACTUALLY renders at, not
+               * the viewport. Below sm the panel is pinned to 42rem (672px)
+               * inside its scroller, so claiming 100vw made next/image serve
+               * a 390px source and upscale it 1.72x — visibly blurry on a
+               * phone. 704px covers 672 plus the border.
+               */
               sizes={
                 maxWidth
-                  ? `(max-width: ${maxWidth}px) 100vw, ${maxWidth}px`
-                  : "(max-width: 1280px) 100vw, 1280px"
+                  ? `(max-width: 639px) 704px, (max-width: ${maxWidth}px) 100vw, ${maxWidth}px`
+                  : "(max-width: 639px) 704px, (max-width: 1280px) 100vw, 1280px"
               }
               className="h-auto w-full"
             />

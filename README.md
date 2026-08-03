@@ -52,6 +52,11 @@ It drives iPhone SE (375px) and iPhone 14 (390px) across 14 routes and fails on:
 - tap targets under 24x24 (WCAG 2.5.8 AA); buttons and header controls are
   held to 44 (Apple HIG)
 - text under 12px
+- **images upscaled past their source resolution**, which is how a wrong
+  `sizes` attribute shows up: `next/image` serves a file too small and the
+  browser stretches it. This shipped once on `/performance-index`, where the
+  report panels claimed `100vw` but actually render at 672px inside their
+  scroller, so a 390px file was being stretched 1.72x
 
 Content that pans inside its own `overflow-x` container is exempt — that is
 deliberate for the Index report panels and the classes comparison table.
